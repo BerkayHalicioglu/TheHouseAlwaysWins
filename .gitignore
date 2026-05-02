@@ -1,0 +1,39 @@
+# Unity Temel Klasörleri (Asla GitHub'a atılmamalı)
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Hafıza ve Kayıtlar
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# Visual Studio ve IDE Dosyaları
+.vs/
+.gradle/
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity Çökme Raporları ve Çıktılar
+sysinfo.txt
+*.apk
+*.aab
+*.unitypackage
+*.app
