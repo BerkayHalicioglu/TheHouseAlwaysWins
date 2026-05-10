@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BlackjackTable : MonoBehaviour
 {
-    [SerializeField] private Transform[] seatPoints = new Transform[5]
-    private customerAI[] occupiedSeats;
+    [SerializeField] private Transform[] seatPoints = new Transform[5];
+    private CustomerAI[] occupiedSeats;
     
     private void Awake() 
     {
@@ -24,13 +24,27 @@ public class BlackjackTable : MonoBehaviour
             // is seat empty?
             if (occupiedSeats[i] == null)
             {
-                occupiedSeats[i] == customer;
+                occupiedSeats[i] = customer;
                 seatPoints = seatPoints[i];
                 return true;
             }
         }
 
-        seatPoints = null;
+        seatoint = null;
         return false;
+    }
+    // npc leaving the table
+    public void ReleaseSeat(CustomerAI customer)
+    {
+        // search for occupied seats
+        for (int i = 0; i < occupiedSeats.Length; i++)
+        {
+            // is seat occupied by a NPC
+            if (occupiedSeats[i] == customer)
+            {   // if yes empty seat
+                occupiedSeats[i] = null;
+                return;
+            }
+        }
     }
 }
