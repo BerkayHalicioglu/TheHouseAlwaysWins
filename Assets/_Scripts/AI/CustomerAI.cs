@@ -12,6 +12,7 @@ public class CustomerAI : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float destinationReachedDistance = 0.5f;
+    [SerializeField] private float destinationSearchDistance = 1.5f;
 
     public CustomerState CurrentState { get; private set; } // current behaviour
     public bool IsCheater { get; private set; } // cheat flag
@@ -60,15 +61,27 @@ public class CustomerAI : MonoBehaviour
 
     private void GoToBlackjackTable() // finds an empty blackjack seat
     {
-        if (CustomerDestinationManager.Instance.TryGetBlackjackSeat(this, out currentTable, out currentSeat)) // is there any empty seat?
+        int maxAttempts = CustomerDestinationManager.Instance.BlackjackTableCount;
+
+        for (int i = 0; i< maxAttempts; i++)
         {
-            CurrentState = CustomerState.WalkingToTable; //if yes walks to there
-            agent.SetDestination(currentSeat.position);
+            if (!CustomerDestinationManager.Instance.TryGetBlackjackSeat(this, out currentTable, out currentSeat)) // is there any empty seat check
+            {
+                break;
+            }
+
+            if (SetDestinationOnNavMesh(currentSeat.position))
+            {
+                CurrentState = CustomerState.WalkingToTable; // if yes walks to table
+                return;
+            }
+
+            currentTable.ReleaseSeat(this);
+            currentTable = null;
+            currentSeat = null;
         }
-        else
-        {
-            LeaveCasino(); // if no leaves casino
-        }
+
+        LeaveCasino(); // if no leaves casino
     }
 
     private void UpdateWalkingToTable() // is npc reached to point?
@@ -95,7 +108,11 @@ public class CustomerAI : MonoBehaviour
 
         if (CustomerDestinationManager.Instance.ExitPoint != null)
         {
-            agent.SetDestination(CustomerDestinationManager.Instance.ExitPoint.position);
+            if (!SetDestinationOnNavMesh(CustomerDestinationManager.Instance.ExitPoint.position))
+            {
+                CurrentState = CustomerState.Gone;
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -132,6 +149,26 @@ public class CustomerAI : MonoBehaviour
           }
 
           Debug.LogWarning($"{name} could not be placed on NavMesh.");
+          return false;
+      }
+
+      private bool SetDestinationOnNavMesh(Vector3 destination) // navmesh exit test
+      {
+          if (!agent.isOnNavMesh && !TryPlaceOnNavMesh())
+          {
+              return false;
+          }
+
+          if (NavMesh.SamplePosition(destination, out NavMeshHit hit, destinationSearchDistance, NavMesh.AllAreas))
+          {
+              NavMeshPath path = new NavMeshPath();
+              if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete)
+              {
+                  return agent.SetPath(path);
+              }
+          }
+
+          Debug.LogWarning($"{name} could not find a NavMesh destination near {destination}.");
           return false;
       }
 
