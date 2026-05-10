@@ -9,28 +9,39 @@ public class CustomerDestinationManager : MonoBehaviour
 
     public Transform ExitPoint => exitPoint;
 
+    public int BlackjackTableCount => blackjackTables == null ? 0 : blackjackTables.Length;
+
     private void Awake()
     {
         Instance = this;
     }
     // walks around the tables to find empty seat. if found give out that point
     public bool TryGetBlackjackSeat(CustomerAI customer, out BlackjackTable table, out Transform seatPoint) {
-        foreach (BlackjackTable blackjackTable in blackjackTables) 
+        table = null;
+        seatPoint = null;
+
+        if (blackjackTables == null || blackjackTables.Length == 0)
         {
-            if (blackjackTable == null) // passes not determined seats
+            return false;
+        }
+        int startIndex = Random.Range(0, blackjackTables.Length);
+
+        for (int i = 0; i < blackjackTables.Length; i++)
+        {
+            int index = (startIndex + i) % blackjackTables.Length;
+            BlackjackTable blackjackTable = blackjackTables[index];
+
+            if (blackjackTable == null)
             {
                 continue;
             }
 
-            if (blackjackTable.ReserveSeat(customer, out seatPoint)) // is there any empty seat?
+            if (blackjackTable.ReserveSeat(customer, out seatPoint))
             {
                 table = blackjackTable;
                 return true;
             }
         }
-
-        table = null;
-        seatPoint = null;
         return false;
     }
 }
