@@ -5539,7 +5539,7 @@ GameObject:
   m_Component:
   - component: {fileID: 900000001}
   m_Layer: 0
-  m_Name: AI_Destinations
+  m_Name: CustomerDestinations
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5662,7 +5662,7 @@ GameObject:
   - component: {fileID: 900001001}
   - component: {fileID: 900001002}
   m_Layer: 0
-  m_Name: BlackjackTable_AI_01
+  m_Name: BlackjackTableTarget_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5872,7 +5872,7 @@ GameObject:
   - component: {fileID: 900002001}
   - component: {fileID: 900002002}
   m_Layer: 0
-  m_Name: BlackjackTable_AI_02
+  m_Name: BlackjackTableTarget_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6082,7 +6082,7 @@ GameObject:
   - component: {fileID: 900003001}
   - component: {fileID: 900003002}
   m_Layer: 0
-  m_Name: BlackjackTable_AI_03
+  m_Name: BlackjackTableTarget_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6292,7 +6292,7 @@ GameObject:
   - component: {fileID: 900004001}
   - component: {fileID: 900004002}
   m_Layer: 0
-  m_Name: BlackjackTable_AI_04
+  m_Name: BlackjackTableTarget_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6502,7 +6502,7 @@ GameObject:
   - component: {fileID: 900005001}
   - component: {fileID: 900005002}
   m_Layer: 0
-  m_Name: BlackjackTable_AI_05
+  m_Name: BlackjackTableTarget_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6712,7 +6712,7 @@ GameObject:
   - component: {fileID: 900006001}
   - component: {fileID: 900006002}
   m_Layer: 0
-  m_Name: BlackjackTable_AI_06
+  m_Name: BlackjackTableTarget_06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15143,6 +15143,70 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7625983311167708358, guid: a1af9abc6c247ce4f9d539d5274709bd, type: 3}
   m_PrefabInstance: {fileID: 2145686503}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &901000000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 901000001}
+  - component: {fileID: 901000002}
+  m_Layer: 0
+  m_Name: NavMeshSurface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &901000001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901000000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &901000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: cebf4c8779b7e49069db4242bc41f6d8, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -15156,3 +15220,4 @@ SceneRoots:
   - {fileID: 1227827162}
   - {fileID: 1201965708}
   - {fileID: 900000001}
+  - {fileID: 901000001}

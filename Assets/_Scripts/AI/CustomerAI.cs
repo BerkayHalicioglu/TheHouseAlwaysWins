@@ -26,6 +26,11 @@ public class CustomerAI : MonoBehaviour
         IsCheater = Random.value < cheatChance; // if random value is lower than prob, that npc is cheater
         CurrentState = CustomerState.Idle; // start state of npc (will change due its behaviour)
 
+        if (!TryPlaceOnNavMesh())
+        {
+            return;
+        }
+
         GoToBlackjackTable();
     }
 
@@ -99,6 +104,23 @@ public class CustomerAI : MonoBehaviour
           }
 
           return agent.remainingDistance <= destinationReachedDistance; // returns true if npc gets closer to the exit
+      }
+
+      private bool TryPlaceOnNavMesh()
+      {
+          if (agent.isOnNavMesh)
+          {
+              return true;
+          }
+
+          if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 10f, NavMesh.AllAreas))
+          {
+              agent.Warp(hit.position);
+              return true;
+          }
+
+          Debug.LogWarning($"{name} could not be placed on NavMesh.");
+          return false;
       }
   
 }
