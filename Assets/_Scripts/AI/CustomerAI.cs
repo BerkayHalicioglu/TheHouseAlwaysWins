@@ -6,6 +6,9 @@ public class CustomerAI : MonoBehaviour
 {
     [Header("Cheating")] // bold font 
     [SerializeField, Range(0f, 1f)] private float cheatChance = 0.25f; // npc cheating probability
+    [SerializeField] private float minPlayBeforeCheat = 5f; // after 5sc that player cheats
+    [SerializeField] private float minPlayAfterCheat = 15f; // last for 15 seconds
+
 
     [Header("Movement")]
     [SerializeField] private float destinationReachedDistance = 0.5f;
@@ -17,6 +20,9 @@ public class CustomerAI : MonoBehaviour
     private NavMeshAgent agent; // navmesh 
     private BlackjackTable currentTable;
     private Transform currentSeat;
+
+    private float playTimer; // counts play time
+    private float cheatTimer; // counts cheat time
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>(); // navmesh is a must for npc to make it walk
@@ -45,6 +51,10 @@ public class CustomerAI : MonoBehaviour
             case CustomerState.Leaving:
             UpdateLeaving();
             break;
+
+            case CustomerState.PlayingBlackjack: // timer starts when NPC playing
+            UpdatePlayingBlackjack();
+            break;
         }
     }
 
@@ -66,6 +76,8 @@ public class CustomerAI : MonoBehaviour
         if (HasReachedDestination())
         {
             CurrentState = CustomerState.PlayingBlackjack; // if yes npc stops and stars playing bj
+            playTimer = 0f; 
+            cheatTimer = Random.Range(minPlayBeforeCheat, minPlayAfterCheat);
             agent.ResetPath();
         }
     }
@@ -106,7 +118,7 @@ public class CustomerAI : MonoBehaviour
           return agent.remainingDistance <= destinationReachedDistance; // returns true if npc gets closer to the exit
       }
 
-      private bool TryPlaceOnNavMesh()
+      private bool TryPlaceOnNavMesh() // navmesh test
       {
           if (agent.isOnNavMesh)
           {
@@ -121,6 +133,27 @@ public class CustomerAI : MonoBehaviour
 
           Debug.LogWarning($"{name} could not be placed on NavMesh.");
           return false;
+      }
+
+      private void UpdatePlayingBlackjack() 
+      {
+        playTimer += Time.deltaTime;
+        if (IsCheater && playTimer >= cheatTimer) // if playTimer gets higher or equeal to cheatTimer that npc becomes suspicious
+        {
+            BecomeSuspicious();
+        }
+      }
+
+      private void BecomeSuspicious()
+      {
+        CurrentState = CustomerState.Suspicious;
+        agent.ResetPath();
+
+        SuspicionIndicator indicator = GetComponentInChildren<SuspicionIndicator>(true);
+        if(indicator != null)
+        {
+            indicator.Show();
+        }
       }
   
 }
