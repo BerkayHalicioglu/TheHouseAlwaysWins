@@ -25,12 +25,12 @@ public class BlackjackTable : MonoBehaviour
             if (occupiedSeats[i] == null)
             {
                 occupiedSeats[i] = customer;
-                seatPoints = seatPoints[i];
+                seatpoint = seatPoints[i];
                 return true;
             }
         }
 
-        seatoint = null;
+        seatpoint = null;
         return false;
     }
     // npc leaving the table
