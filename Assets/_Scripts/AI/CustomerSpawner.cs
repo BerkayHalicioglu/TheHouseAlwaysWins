@@ -13,6 +13,11 @@ public class CustomerSpawner : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance != null && GameManager.Instance.CurrentState != GameState.CasinoFloor)
+        {
+            return;
+        }
+
         spawnTimer += Time.deltaTime;
 
         if (spawnTimer < spawnInterval)
