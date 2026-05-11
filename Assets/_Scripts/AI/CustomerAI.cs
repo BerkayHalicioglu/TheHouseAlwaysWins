@@ -54,6 +54,20 @@ public class CustomerAI : MonoBehaviour
 
     private void Update()
     {
+        if (!IsCasinoRunning())
+        {
+            if (agent.isOnNavMesh)
+            {
+                agent.isStopped = true;
+            }
+            return;
+        }
+
+        if (agent.isOnNavMesh && agent.isStopped && (CurrentState == CustomerState.WalkingToTable || CurrentState == CustomerState.Leaving))
+        {
+            agent.isStopped = false;
+        }
+
         switch (CurrentState)
         {
             case CustomerState.WalkingToTable:
@@ -251,6 +265,11 @@ public class CustomerAI : MonoBehaviour
 
         CurrentState = CustomerState.Leaving; // npc starts walking to exit
 
+        if (agent.isOnNavMesh)
+        {
+            agent.isStopped = false;
+        }
+
         if (CustomerDestinationManager.Instance.ExitPoint != null)
         {
             if (!SetDestinationOnNavMesh(CustomerDestinationManager.Instance.ExitPoint.position))
@@ -326,6 +345,11 @@ public class CustomerAI : MonoBehaviour
           return false;
       }
 
+      private bool IsCasinoRunning()
+      {
+        return GameManager.Instance == null || GameManager.Instance.CurrentState == GameState.CasinoFloor;
+      }
+
       private bool SetDestinationOnNavMesh(Vector3 destination) // navmesh exit test
       {
           if (!agent.isOnNavMesh && !TryPlaceOnNavMesh())
@@ -338,6 +362,7 @@ public class CustomerAI : MonoBehaviour
               NavMeshPath path = new NavMeshPath();
               if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete)
               {
+                  agent.isStopped = false;
                   return agent.SetPath(path);
               }
           }
@@ -373,7 +398,7 @@ public class CustomerAI : MonoBehaviour
         }
       }
       // Yeşim'in interaction sistemi NPC sorgusunu başlatınca çağıracak
-      private void StartInterrogating() // interrogation start (yeşim bunu sen kullanacaksın)
+      public void StartInterrogation() // interrogation start (yeşim bunu sen kullanacaksın)
       {
         if (!CanBeInteractedWith || CurrentState != CustomerState.Suspicious)
         {
@@ -388,6 +413,7 @@ public class CustomerAI : MonoBehaviour
         if (agent.isOnNavMesh)
         {
             agent.ResetPath();
+            agent.isStopped = true;
         }
 
         SuspicionIndicator indicator = GetComponentInChildren<SuspicionIndicator>(true);
@@ -397,7 +423,7 @@ public class CustomerAI : MonoBehaviour
         }
       }
       // İbrahim'in sorgu UI sistemi sorgu bittikten sonra NPC'yi serbest bırakınca çağıracak
-      private void ReleaseFromInterrogation() // if innocent go out 
+      public void ReleaseFromInterrogation() // if innocent go out
       {
         if (CurrentState != CustomerState.Interrogating)
         {
@@ -407,7 +433,7 @@ public class CustomerAI : MonoBehaviour
         LeaveCasino();
       }
        // sorgu UI veya player mechanics NPC'yi arka odaya gönderince çağıracak
-      private void SendToBackRoom() // backroom sending script (ibo burası sende UI sonucu için burayı alacaksın)
+      public void SendToBackRoom() // backroom sending script (ibo burası sende UI sonucu için burayı alacaksın)
       {
         if (CurrentState != CustomerState.Interrogating && CurrentState != CustomerState.Suspicious)
         {
@@ -422,6 +448,7 @@ public class CustomerAI : MonoBehaviour
         if (agent.isOnNavMesh)
         {
             agent.ResetPath();
+            agent.isStopped = true;
         }
 
         SuspicionIndicator indicator = GetComponentInChildren<SuspicionIndicator>(true);
@@ -431,7 +458,7 @@ public class CustomerAI : MonoBehaviour
         }
       }
     // hileci NPC yakalanmadan bırakılırsa çıkışa göndermek için çağrılacak
-    private void MissCheater()
+    public void MissCheater()
     {
         if (!IsCheater)
         {
