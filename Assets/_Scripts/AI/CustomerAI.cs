@@ -372,5 +372,80 @@ public class CustomerAI : MonoBehaviour
             indicator.Show();
         }
       }
-  
+      // Yeşim'in interaction sistemi NPC sorgusunu başlatınca çağıracak
+      private void StartInterrogating() // interrogation start (yeşim bunu sen kullanacaksın)
+      {
+        if (!CanBeInteractedWith || CurrentState != CustomerState.Suspicious)
+        {
+            return;
+        }
+
+        CanBeInteractedWith = false;
+        CurrentState = CustomerState.Interrogating;
+
+        ReleaseCurrentDestination();
+
+        if (agent.isOnNavMesh)
+        {
+            agent.ResetPath();
+        }
+
+        SuspicionIndicator indicator = GetComponentInChildren<SuspicionIndicator>(true);
+        if (indicator != null)
+        {
+            indicator.Hide();
+        }
+      }
+      // İbrahim'in sorgu UI sistemi sorgu bittikten sonra NPC'yi serbest bırakınca çağıracak
+      private void ReleaseFromInterrogation() // if innocent go out 
+      {
+        if (CurrentState != CustomerState.Interrogating)
+        {
+            return;
+        }
+
+        LeaveCasino();
+      }
+       // sorgu UI veya player mechanics NPC'yi arka odaya gönderince çağıracak
+      private void SendToBackRoom() // backroom sending script (ibo burası sende UI sonucu için burayı alacaksın)
+      {
+        if (CurrentState != CustomerState.Interrogating && CurrentState != CustomerState.Suspicious)
+        {
+            return;
+        }
+
+        CanBeInteractedWith = false;
+        CurrentState = CustomerState.EscortedToBackRoom;
+
+        ReleaseCurrentDestination();
+
+        if (agent.isOnNavMesh)
+        {
+            agent.ResetPath();
+        }
+
+        SuspicionIndicator indicator = GetComponentInChildren<SuspicionIndicator>(true);
+        if (indicator != null)
+        {
+            indicator.Hide();
+        }
+      }
+    // hileci NPC yakalanmadan bırakılırsa çıkışa göndermek için çağrılacak
+    private void MissCheater()
+    {
+        if (!IsCheater)
+        {
+            return;
+        }
+
+        CanBeInteractedWith = false;
+
+        SuspicionIndicator indicator = GetComponentInChildren<SuspicionIndicator>(true);
+        if (indicator != null)
+        {
+            indicator.Hide();
+        }
+
+        LeaveCasino();
+    }
 }
