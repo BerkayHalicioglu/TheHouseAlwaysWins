@@ -4,15 +4,19 @@ using UnityEngine.AI;
 [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 public class CustomerAI : MonoBehaviour
 {
+    private const int ActivityCount = 4;
+
     [Header("Cheating")] // bold font 
     [SerializeField, Range(0f, 1f)] private float cheatChance = 0.25f; // npc cheating probability
     [SerializeField] private float minPlayBeforeCheat = 5f; // after 5sc that player cheats
     [SerializeField] private float minPlayAfterCheat = 15f; // last for 15 seconds
+    [SerializeField] private float minActivityDuration = 20f;
+    [SerializeField] private float maxActivityDuration = 45f;
 
 
     [Header("Movement")]
     [SerializeField] private float destinationReachedDistance = 0.5f;
-    [SerializeField] private float destinationSearchDistance = 1.5f;
+    [SerializeField] private float destinationSearchDistance = 3f;
 
     public CustomerState CurrentState { get; private set; } // current behaviour
     public bool IsCheater { get; private set; } // cheat flag
@@ -21,9 +25,15 @@ public class CustomerAI : MonoBehaviour
     private NavMeshAgent agent; // navmesh 
     private BlackjackTable currentTable;
     private Transform currentSeat;
+    private CustomerActivity currentActivity;
+
+    private SlotMachine currentSlotMachine; // slot machine
+    private RouletteTable currentRouletteTable; // roulette table
+    private BarTable currentBarTable; // bar table
 
     private float playTimer; // counts play time
     private float cheatTimer; // counts cheat time
+    private float activityTimer;
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>(); // navmesh is a must for npc to make it walk
@@ -38,7 +48,8 @@ public class CustomerAI : MonoBehaviour
             return;
         }
 
-        GoToBlackjackTable();
+        ChooseActivity();
+        GoToSelectedActivity();
     }
 
     private void Update()
@@ -59,11 +70,74 @@ public class CustomerAI : MonoBehaviour
         }
     }
 
-    private void GoToBlackjackTable() // finds an empty blackjack seat
+    private void ChooseActivity() // npc activity probabilty
+    {
+        int activityRoll = Random.Range(0, 100);
+
+        if (activityRoll < 20)
+        {
+            currentActivity = CustomerActivity.Blackjack;
+        }
+        else if (activityRoll < 75)
+        {
+            currentActivity = CustomerActivity.Slot;
+        }
+        else if (activityRoll < 90)
+        {
+            currentActivity = CustomerActivity.Roulette;
+        }
+        else
+        {
+            currentActivity = CustomerActivity.Bar;
+        }
+    }
+
+    private void GoToSelectedActivity() // npc go mechanics
+    {
+        int startActivityIndex = (int)currentActivity;
+
+        for (int i = 0; i < ActivityCount; i++)
+        {
+            currentActivity = (CustomerActivity)((startActivityIndex + i) % ActivityCount);
+
+            if (TryGoToCurrentActivity())
+            {
+                return;
+            }
+        }
+
+        LeaveCasino();
+    }
+
+    private bool TryGoToCurrentActivity()
+    {
+        switch (currentActivity)
+        {
+            case CustomerActivity.Blackjack:
+            return TryGoToBlackjackTable();
+
+            case CustomerActivity.Slot:
+            return TryGoToSlotMachine();
+
+            case CustomerActivity.Roulette:
+            return TryGoToRouletteTable();
+
+            case CustomerActivity.Bar:
+            return TryGoToBarPoint();
+
+            case CustomerActivity.Exit:
+            LeaveCasino();
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool TryGoToBlackjackTable() // finds an empty blackjack seat
     {
         int maxAttempts = CustomerDestinationManager.Instance.BlackjackTableCount;
 
-        for (int i = 0; i< maxAttempts; i++)
+        for (int i = 0; i < maxAttempts; i++)
         {
             if (!CustomerDestinationManager.Instance.TryGetBlackjackSeat(this, out currentTable, out currentSeat)) // is there any empty seat check
             {
@@ -73,7 +147,7 @@ public class CustomerAI : MonoBehaviour
             if (SetDestinationOnNavMesh(currentSeat.position))
             {
                 CurrentState = CustomerState.WalkingToTable; // if yes walks to table
-                return;
+                return true;
             }
 
             currentTable.ReleaseSeat(this);
@@ -81,7 +155,82 @@ public class CustomerAI : MonoBehaviour
             currentSeat = null;
         }
 
-        LeaveCasino(); // if no leaves casino
+        return false;
+    }
+
+    private bool TryGoToSlotMachine() // finds an empty slot machine
+    {
+        int maxAttempts = CustomerDestinationManager.Instance.SlotMachineCount;
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            if (!CustomerDestinationManager.Instance.TryGetSlotPoint(this, out currentSlotMachine, out currentSeat)) // is there any empty seat check
+            {
+                break;
+            }
+
+            if (SetDestinationOnNavMesh(currentSeat.position))
+            {
+                CurrentState = CustomerState.WalkingToTable; // if yes walks to table
+                return true;
+            }
+
+            currentSlotMachine.ReleaseSlot(this);
+            currentSlotMachine = null;
+            currentSeat = null;
+        }
+
+        return false;
+    }
+
+    private bool TryGoToRouletteTable() // finds an empty roulette seat
+    {
+        int maxAttempts = CustomerDestinationManager.Instance.RouletteTableCount;
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            if (!CustomerDestinationManager.Instance.TryGetRouletteSeat(this, out currentRouletteTable, out currentSeat)) // is there any empty seat check
+            {
+                break;
+            }
+
+            if (SetDestinationOnNavMesh(currentSeat.position))
+            {
+                CurrentState = CustomerState.WalkingToTable; // if yes walks to table
+                return true;
+            }
+
+            currentRouletteTable.ReleaseSeat(this);
+            currentRouletteTable = null;
+            currentSeat = null;
+        }
+
+        return false;
+    }
+
+    private bool TryGoToBarPoint() // finds an empty blackjack seat
+    {
+        int maxAttempts = CustomerDestinationManager.Instance.BarTableCount;
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            if (!CustomerDestinationManager.Instance.TryGetBarPoint(this, out currentBarTable, out currentSeat)) // is there any empty seat check
+            {
+                break;
+            }
+
+            if (SetDestinationOnNavMesh(currentSeat.position))
+            {
+                CurrentState = CustomerState.WalkingToTable; // if yes walks to table
+                return true;
+            }
+
+            currentBarTable.ReleasePoint(this);
+            currentBarTable = null;
+            currentSeat = null;
+        }
+
+        return false;
     }
 
     private void UpdateWalkingToTable() // is npc reached to point?
@@ -91,18 +240,14 @@ public class CustomerAI : MonoBehaviour
             CurrentState = CustomerState.PlayingBlackjack; // if yes npc stops and stars playing bj
             playTimer = 0f; 
             cheatTimer = Random.Range(minPlayBeforeCheat, minPlayAfterCheat);
+            activityTimer = Random.Range(minActivityDuration, maxActivityDuration);
             agent.ResetPath();
         }
     }
 
     private void LeaveCasino() // leave casino
     {
-        if (currentTable != null)
-        {
-            currentTable.ReleaseSeat(this); // occupied seat reserved for another NPC
-            currentTable = null;
-            currentSeat = null;
-        }
+        ReleaseCurrentDestination();
 
         CurrentState = CustomerState.Leaving; // npc starts walking to exit
 
@@ -114,6 +259,35 @@ public class CustomerAI : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    private void ReleaseCurrentDestination()
+    {
+        if (currentTable != null)
+        {
+            currentTable.ReleaseSeat(this); // occupied seat reserved for another NPC
+            currentTable = null;
+        }
+
+        if (currentSlotMachine != null)
+        {
+            currentSlotMachine.ReleaseSlot(this);
+            currentSlotMachine = null;
+        }
+
+        if (currentRouletteTable != null)
+        {
+            currentRouletteTable.ReleaseSeat(this);
+            currentRouletteTable = null;
+        }
+
+        if (currentBarTable != null)
+        {
+            currentBarTable.ReleasePoint(this);
+            currentBarTable = null;
+        }
+
+        currentSeat = null;
     }
 
     private void UpdateLeaving() // checks that is npc reached exit
@@ -178,6 +352,12 @@ public class CustomerAI : MonoBehaviour
         if (IsCheater && playTimer >= cheatTimer) // if playTimer gets higher or equeal to cheatTimer that npc becomes suspicious
         {
             BecomeSuspicious();
+            return;
+        }
+
+        if (playTimer >= activityTimer)
+        {
+            LeaveCasino();
         }
       }
 
