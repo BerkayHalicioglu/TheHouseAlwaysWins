@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
-public class CustomerAI : MonoBehaviour
+public class CustomerAI : MonoBehaviour, IInteractable
 {
     private const int ActivityCount = 4;
 
@@ -397,8 +397,11 @@ public class CustomerAI : MonoBehaviour
             indicator.Show();
         }
       }
-      // Yeşim'in interaction sistemi NPC sorgusunu başlatınca çağıracak
-      public void StartInterrogation() // interrogation start (yeşim bunu sen kullanacaksın)
+      public void Interact()
+      {
+        StartInterrogation(); // interrogation start (yeşim bunu sen kullanacaksın)
+      }
+      public void StartInterrogation()
       {
         if (!CanBeInteractedWith || CurrentState != CustomerState.Suspicious)
         {
