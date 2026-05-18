@@ -1449,6 +1449,53 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3927918558419263796, guid: b5efb856623b59c4da56e8856f2c3d10, type: 3}
   m_PrefabInstance: {fileID: 1569207358}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &185886905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 185886907}
+  - component: {fileID: 185886906}
+  m_Layer: 0
+  m_Name: CasinoFinanceSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &185886906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185886905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e65dcbe1411458aa0194492de1122b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CasinoFinanceSystem
+  dailyRent: 500
+  dailySalary: 750
+  dailyElectricity: 250
+--- !u!4 &185886907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185886905}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 34.92374, y: 0, z: 9.74306}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &189271201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12636,6 +12683,51 @@ MonoBehaviour:
   usePoint: {fileID: 0}
   standDistance: 1.1
   navMeshSearchDistance: 0.8
+--- !u!1 &1574777604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1574777606}
+  - component: {fileID: 1574777605}
+  m_Layer: 0
+  m_Name: EconomyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1574777605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574777604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6315e0024354c2458960ec1278fc6cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EconomyManager
+  startingBankroll: 5000
+--- !u!4 &1574777606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574777604}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 34.92374, y: 0, z: 9.74306}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1589586984
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16744,6 +16836,52 @@ MonoBehaviour:
   usePoint: {fileID: 0}
   standDistance: 1.1
   navMeshSearchDistance: 0.8
+--- !u!1 &2020006654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2020006656}
+  - component: {fileID: 2020006655}
+  m_Layer: 0
+  m_Name: BetManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2020006655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020006654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab8dc4e270b443ad98fca245a0bb849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BetManager
+  minimumBet: 100
+  maximumBet: 1000
+--- !u!4 &2020006656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020006654}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 34.92374, y: 0, z: 9.74306}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2024977324
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17918,3 +18056,6 @@ SceneRoots:
   - {fileID: 901000001}
   - {fileID: 392911596}
   - {fileID: 1758920413}
+  - {fileID: 1574777606}
+  - {fileID: 185886907}
+  - {fileID: 2020006656}
