@@ -9960,6 +9960,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kavisli_Kose (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7221652647106424705, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221652647106424705, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10465,6 +10473,18 @@ PrefabInstance:
     - target: {fileID: 4618807020147266208, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
       propertyPath: m_Name
       value: Kavisli_Kose
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221652647106424705, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
+      propertyPath: m_Radius
+      value: 0.5000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221652647106424705, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221652647106424705, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -19,7 +19,7 @@ public class PlayerInteractor : MonoBehaviour
         if (Mouse.current == null)
             return;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Keyboard.current.eKey.wasPressedThisFrame)
             TryInteract();
     }
 

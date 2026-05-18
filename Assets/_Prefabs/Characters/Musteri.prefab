@@ -195,7 +195,6 @@ GameObject:
   - component: {fileID: 4800555007030377938}
   - component: {fileID: -1129972058147243353}
   - component: {fileID: -5640715809288206694}
-  - component: {fileID: 8657738579205931784}
   m_Layer: 3
   m_Name: Musteri
   m_TagString: Untagged
@@ -340,19 +339,6 @@ MonoBehaviour:
   maxActivityDuration: 45
   destinationReachedDistance: 0.5
   destinationSearchDistance: 3
---- !u!114 &8657738579205931784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3843075743248383283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0edb2c99867764f209e9e852da4cd8d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SuspiciousTarget
-  suspicionIndicator: {fileID: 5982630465714921556}
 --- !u!1 &5982630465714921556
 GameObject:
   m_ObjectHideFlags: 0
