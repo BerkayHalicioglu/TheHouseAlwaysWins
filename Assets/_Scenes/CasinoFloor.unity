@@ -131,6 +131,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rulet_Masasi (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.x
+      value: 1.1860139
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.z
+      value: 1.2294707
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.x
+      value: -0.019601464
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.z
+      value: -0.007335961
+      objectReference: {fileID: 0}
     - target: {fileID: 8750330138209410766, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.2799523
@@ -597,6 +613,22 @@ PrefabInstance:
     - target: {fileID: 339475358696479537, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_Name
       value: Rulet_Masasi
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2711463
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.z
+      value: 1.2238274
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.x
+      value: 0.007801771
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.z
+      value: -0.01142025
       objectReference: {fileID: 0}
     - target: {fileID: 8750330138209410766, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1717,6 +1749,22 @@ PrefabInstance:
     - target: {fileID: 339475358696479537, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_Name
       value: Rulet_Masasi (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2370406
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.z
+      value: 1.2401154
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.x
+      value: -0.0026664736
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.z
+      value: -0.107432954
       objectReference: {fileID: 0}
     - target: {fileID: 8750330138209410766, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3945,6 +3993,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6412208639889885679, guid: b5efb856623b59c4da56e8856f2c3d10, type: 3}
   m_PrefabInstance: {fileID: 515556892}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &525019877 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4618807020147266208, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
+  m_PrefabInstance: {fileID: 1310377560}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &530529255
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4903,9 +4956,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 569008980}
     m_Modifications:
+    - target: {fileID: 813385744260926880, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.134
+      objectReference: {fileID: 0}
+    - target: {fileID: 813385744260926880, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.124
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688510057600276670, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.056
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688510057600276670, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.147
+      objectReference: {fileID: 0}
     - target: {fileID: 1916711456333742358, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_Name
       value: Blackjack_Masasi (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.x
+      value: 1.1637187
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.z
+      value: 1.2933825
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.x
+      value: -0.016338766
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.z
+      value: 0.018584788
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4913,7 +4998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.099999994
+      value: 0.216
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4962,6 +5047,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3927918558419263796, guid: b5efb856623b59c4da56e8856f2c3d10, type: 3}
   m_PrefabInstance: {fileID: 1589722186}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &679442365 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4618807020147266208, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
+  m_PrefabInstance: {fileID: 1218547025}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &681471065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4973,6 +5063,22 @@ PrefabInstance:
     - target: {fileID: 339475358696479537, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_Name
       value: Rulet_Masasi (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2669017
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.z
+      value: 1.2461133
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0022867916
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.z
+      value: -0.016268967
       objectReference: {fileID: 0}
     - target: {fileID: 8750330138209410766, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5477,9 +5583,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 569008980}
     m_Modifications:
+    - target: {fileID: 813385744260926880, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.085
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688510057600276670, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.027
+      objectReference: {fileID: 0}
     - target: {fileID: 1916711456333742358, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_Name
       value: Blackjack_Masasi (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.x
+      value: 1.0841079
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.z
+      value: 1.3085022
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.x
+      value: -0.007564783
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.z
+      value: -0.07212067
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5491,7 +5621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.70902
+      value: 27.729
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6053,6 +6183,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3381331455479073402, guid: 68ffa067895928d4a8d5e439d2d7c377, type: 3}
   m_PrefabInstance: {fileID: 860954240}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &873771548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 873771549}
+  - component: {fileID: 873771551}
+  - component: {fileID: 873771550}
+  m_Layer: 5
+  m_Name: Nokta_Imlec
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &873771549
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873771548}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 907928349}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 8, y: 10}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &873771550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873771548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.90943396, g: 0.9072343, b: 0.78074044, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &873771551
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873771548}
+  m_CullTransparentMesh: 1
 --- !u!1001 &877120620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7776,6 +7981,108 @@ MonoBehaviour:
   usePoint: {fileID: 0}
   standDistance: 1.1
   navMeshSearchDistance: 0.8
+--- !u!1 &907928345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 907928349}
+  - component: {fileID: 907928348}
+  - component: {fileID: 907928347}
+  - component: {fileID: 907928346}
+  m_Layer: 5
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &907928346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907928345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &907928347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907928345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &907928348
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907928345}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &907928349
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907928345}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 873771549}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1001 &922603886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8505,9 +8812,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 569008980}
     m_Modifications:
+    - target: {fileID: 813385744260926880, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.121
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688510057600276670, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.117
+      objectReference: {fileID: 0}
     - target: {fileID: 1916711456333742358, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_Name
       value: Blackjack_Masasi
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2687306
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.z
+      value: 1.3453617
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.x
+      value: -0.034503937
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.z
+      value: -0.035046577
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9789,9 +10120,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 569008980}
     m_Modifications:
+    - target: {fileID: 813385744260926880, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.117
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688510057600276670, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.099
+      objectReference: {fileID: 0}
     - target: {fileID: 1916711456333742358, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_Name
       value: Blackjack_Masasi (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2924845
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.y
+      value: 2.8057446
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.z
+      value: 1.353713
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.x
+      value: -0.015206218
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.y
+      value: -0.4101796
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.z
+      value: -0.063548565
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9968,16 +10331,42 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7221652647106424705, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4618807020147266208, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1218547030}
   m_SourcePrefab: {fileID: 100100000, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
 --- !u!4 &1218547026 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1023523471642437821, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
   m_PrefabInstance: {fileID: 1218547025}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &1218547030
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679442365}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1222434282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10486,16 +10875,42 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7221652647106424705, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4618807020147266208, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1310377565}
   m_SourcePrefab: {fileID: 100100000, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
 --- !u!4 &1310377561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1023523471642437821, guid: c5833b02991c77a49a926ee91bc6fb14, type: 3}
   m_PrefabInstance: {fileID: 1310377560}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &1310377565
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525019877}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1313378766 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3927918558419263796, guid: b5efb856623b59c4da56e8856f2c3d10, type: 3}
@@ -11264,7 +11679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7625983311167708358, guid: a1af9abc6c247ce4f9d539d5274709bd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.665579
+      value: 18.48
       objectReference: {fileID: 0}
     - target: {fileID: 7625983311167708358, guid: a1af9abc6c247ce4f9d539d5274709bd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13562,6 +13977,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rulet_Masasi (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2066492
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.z
+      value: 1.1981301
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.x
+      value: 0.040907204
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.z
+      value: 0.018986464
+      objectReference: {fileID: 0}
     - target: {fileID: 8750330138209410766, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.2236567
@@ -13836,6 +14267,22 @@ PrefabInstance:
     - target: {fileID: 339475358696479537, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_Name
       value: Rulet_Masasi (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2532141
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.z
+      value: 1.2635254
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.x
+      value: 0.012140751
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.z
+      value: -0.026127873
       objectReference: {fileID: 0}
     - target: {fileID: 8750330138209410766, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_LocalScale.y
@@ -14242,6 +14689,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rulet_Masasi (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.x
+      value: 1.1915483
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.y
+      value: 2.843937
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.z
+      value: 1.2292889
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.x
+      value: -0.07558114
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.y
+      value: -0.42199343
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.z
+      value: -0.049372915
+      objectReference: {fileID: 0}
     - target: {fileID: 8750330138209410766, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.8584833
@@ -14460,7 +14931,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
@@ -14570,9 +15041,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 569008980}
     m_Modifications:
+    - target: {fileID: 813385744260926880, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.131
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688510057600276670, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.118
+      objectReference: {fileID: 0}
     - target: {fileID: 1916711456333742358, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_Name
       value: Blackjack_Masasi (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.x
+      value: 1.1842287
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.z
+      value: 1.381176
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.x
+      value: -0.022320181
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.z
+      value: 0.07613182
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15305,9 +15800,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 569008980}
     m_Modifications:
+    - target: {fileID: 813385744260926880, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.121
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688510057600276670, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.142
+      objectReference: {fileID: 0}
     - target: {fileID: 1916711456333742358, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_Name
       value: Blackjack_Masasi (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Size.z
+      value: 1.1194265
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.x
+      value: -0.004894674
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975597132380064196, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
+      propertyPath: m_Center.z
+      value: -0.011278033
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15315,7 +15830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0.235
       objectReference: {fileID: 0}
     - target: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15359,6 +15874,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8417217347232990382, guid: 14fcf14486565434daf108c1e2ef9730, type: 3}
   m_PrefabInstance: {fileID: 1845824319}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1846521833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1846521836}
+  - component: {fileID: 1846521835}
+  - component: {fileID: 1846521834}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1846521834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846521833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
+--- !u!114 &1846521835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846521833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1846521836
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846521833}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1858446289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16942,6 +17536,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rulet_Masasi (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2523189
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.y
+      value: 1.5336477
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.z
+      value: 1.2595693
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.x
+      value: 0.071995266
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.y
+      value: -0.23317617
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.z
+      value: 0.011268734
+      objectReference: {fileID: 0}
     - target: {fileID: 8750330138209410766, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.130349
@@ -17014,6 +17632,30 @@ PrefabInstance:
     - target: {fileID: 339475358696479537, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_Name
       value: Rulet_Masasi (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.x
+      value: 1.3053226
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.y
+      value: 1.600724
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Size.z
+      value: 1.282277
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.x
+      value: 0.060127113
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.y
+      value: -0.19963801
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773269072109763461, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
+      propertyPath: m_Center.z
+      value: -0.08339721
       objectReference: {fileID: 0}
     - target: {fileID: 8750330138209410766, guid: 45211e271a8196e4ab8d3646c937db57, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17151,7 +17793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7625983311167708358, guid: a1af9abc6c247ce4f9d539d5274709bd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.63768
+      value: 18.48
       objectReference: {fileID: 0}
     - target: {fileID: 7625983311167708358, guid: a1af9abc6c247ce4f9d539d5274709bd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -17918,3 +18560,5 @@ SceneRoots:
   - {fileID: 901000001}
   - {fileID: 392911596}
   - {fileID: 1758920413}
+  - {fileID: 1846521836}
+  - {fileID: 907928349}
