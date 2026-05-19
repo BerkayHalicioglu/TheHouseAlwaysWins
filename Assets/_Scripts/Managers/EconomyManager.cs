@@ -20,17 +20,35 @@ public class EconomyManager : MonoBehaviour
     private void Start()
     {
         CurrentBankroll = startingBankroll;
+        OnBankrollChanged?.Invoke(CurrentBankroll);
     }
 
     public void AddMoney(float amount)
     {
+        if (amount <= 0f) return;
+
         CurrentBankroll += amount;
         OnBankrollChanged?.Invoke(CurrentBankroll);
-        if (CurrentBankroll <= 0) GameManager.Instance.TriggerGameOver();
     }
 
-    public void DeductMoney(float amount)
+    public bool DeductMoney(float amount)
     {
-        AddMoney(-amount);
+        if (amount <= 0f) return false;
+
+        if (CurrentBankroll >= amount)
+        {
+            CurrentBankroll -= amount;
+            OnBankrollChanged?.Invoke(CurrentBankroll);
+
+            if (CurrentBankroll <= 0f)
+            {
+                GameManager.Instance.TriggerGameOver();
+            }
+
+            return true;
+        }
+
+        GameManager.Instance.TriggerGameOver();
+        return false;
     }
 }
