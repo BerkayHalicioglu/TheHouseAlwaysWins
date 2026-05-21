@@ -12,7 +12,57 @@ public class GameTableInteraction : MonoBehaviour, ICardDealable
     [SerializeField] private string tableName = "Game Table";
     [SerializeField] private GameTableType tableType;
     [SerializeField] private QTEManager qteManager;
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private BlackjackLogic blackjackLogic;
+    [SerializeField] private BetManager betManager;
 
+    private void Awake()
+    {
+        if (playerController == null)
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+            if (playerObject != null)
+            {
+                playerController = playerObject.GetComponent<PlayerController>();
+            }
+        }
+
+        if (qteManager == null)
+        {
+            qteManager = FindFirstObjectByType<QTEManager>();
+        }
+
+        if (blackjackLogic == null)
+        {
+            blackjackLogic = FindFirstObjectByType<BlackjackLogic>();
+        }
+
+        if (betManager == null)
+        {
+            betManager = FindFirstObjectByType<BetManager>();
+        }
+
+        if (playerController == null)
+        {
+            Debug.LogWarning("[GameTableInteraction] PlayerController could not be found. Make sure the Player object is tagged as Player.");
+        }
+
+        if (qteManager == null)
+        {
+            Debug.LogWarning("[GameTableInteraction] QTEManager could not be found in the scene.");
+        }
+
+        if (blackjackLogic == null)
+        {
+            Debug.LogWarning("[GameTableInteraction] BlackjackLogic could not be found in the scene.");
+        }
+
+        if (betManager == null)
+        {
+            Debug.LogWarning("[GameTableInteraction] BetManager could not be found in the scene.");
+        }
+    }
 
     public void DealCards()
     {
@@ -38,6 +88,7 @@ public class GameTableInteraction : MonoBehaviour, ICardDealable
 
         int dealerTotal = dealerCard1 + dealerCard2;
         int playerTotal = playerCard1 + playerCard2;
+        bool playerHasBlackjack = playerTotal == 21;
 
         Debug.Log($"[{tableName}] Blackjack Round Started");
         Debug.Log($"[BLACKJACK] Dealer Cards -> {dealerCard1}, {dealerCard2} | Total: {dealerTotal}");
@@ -46,9 +97,22 @@ public class GameTableInteraction : MonoBehaviour, ICardDealable
         Debug.Log("[UI HOOK] Update blackjack card visuals");
         Debug.Log("[UI HOOK] Display blackjack totals");
 
+        if (blackjackLogic != null && betManager != null)
+        {
+            BetResult result = blackjackLogic.DetermineResult(playerTotal, dealerTotal, playerHasBlackjack);
+            float payout = betManager.ResolveBet(result);
+
+            if (EconomyManager.Instance != null)
+            {
+                EconomyManager.Instance.AddMoney(payout);
+            }
+
+            Debug.Log($"[BLACKJACK RESULT] {result} | Payout: {payout}");
+        }
+
         if (qteManager != null)
         {
-            qteManager.StartQTE();
+            qteManager.StartQTE(playerController);
         }
     }
 
@@ -75,14 +139,15 @@ public class GameTableInteraction : MonoBehaviour, ICardDealable
         Debug.Log($"[ROULETTE] Result -> {resultNumber} / {color}");
         Debug.Log("[UI HOOK] Start roulette spin animation");
         Debug.Log("[UI HOOK] Display roulette result");
+
         if (qteManager != null)
         {
-            qteManager.StartQTE();
+            qteManager.StartQTE(playerController);
         }
     }
 
     private int DrawCard()
     {
-        return Random.Range(1, 12);
+        return Random.Range(1, 11);
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4908640809831551630}
   - component: {fileID: 1773269072109763461}
   - component: {fileID: 8477162606586195643}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rulet_Masasi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,8 +141,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.2370406, y: 1.5336477, z: 1.2401154}
-  m_Center: {x: -0.0026664736, y: -0.23317617, z: -0.107432954}
+  m_Size: {x: 1.2669017, y: 1.5336477, z: 1.2461133}
+  m_Center: {x: 0.0022867916, y: -0.23317617, z: -0.016268967}
 --- !u!114 &8477162606586195643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,6 +158,9 @@ MonoBehaviour:
   tableName: Roulette Table
   tableType: 1
   qteManager: {fileID: 0}
+  playerController: {fileID: 0}
+  blackjackLogic: {fileID: 0}
+  betManager: {fileID: 0}
 --- !u!1 &2288326398364924480
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3573761453788412024}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SeatPoint_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5001173247340810551}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SeatPoint_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +235,7 @@ GameObject:
   - component: {fileID: 3422798120189397307}
   - component: {fileID: 7625479903125869159}
   - component: {fileID: 3304204928866007601}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Btn_Rulet_Cevir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2093930394821787149}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SeatPoint_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5263176092331854026}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SeatPoint_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8381510716480160078}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SeatPoint_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,6 +439,10 @@ PrefabInstance:
     - target: {fileID: 2851772060726405290, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
       propertyPath: m_Name
       value: Cip_Yigini (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851772060726405290, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7459047028471685565, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
       propertyPath: m_LocalScale.x
@@ -511,6 +518,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cip_Yigini (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2851772060726405290, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7459047028471685565, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.1
@@ -584,6 +595,10 @@ PrefabInstance:
     - target: {fileID: 2851772060726405290, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
       propertyPath: m_Name
       value: Cip_Yigini (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851772060726405290, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7459047028471685565, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
       propertyPath: m_LocalScale.x
@@ -659,6 +674,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cip_Yigini
       objectReference: {fileID: 0}
+    - target: {fileID: 2851772060726405290, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7459047028471685565, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.1
@@ -732,6 +751,10 @@ PrefabInstance:
     - target: {fileID: 2851772060726405290, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
       propertyPath: m_Name
       value: Cip_Yigini (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851772060726405290, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7459047028471685565, guid: 972958ba9e6f82944b8ca48bd0e8849e, type: 3}
       propertyPath: m_LocalScale.x
