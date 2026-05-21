@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController characterController;
     private Vector3 verticalVelocity;
+    private bool movementEnabled = true;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 moveInput = Vector2.zero;
 
-        if (Keyboard.current != null)
+        if (movementEnabled && Keyboard.current != null)
         {
             if (Keyboard.current.wKey.isPressed) moveInput.y += 1f;
             if (Keyboard.current.sKey.isPressed) moveInput.y -= 1f;
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
         if (moveDirection.magnitude > 1f)
             moveDirection.Normalize();
 
-        bool isSprinting = Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
+        bool isSprinting = movementEnabled && Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
         float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
 
         characterController.Move(moveDirection * currentSpeed * Time.deltaTime);
@@ -46,5 +47,11 @@ public class PlayerController : MonoBehaviour
 
         verticalVelocity.y += gravity * Time.deltaTime;
         characterController.Move(verticalVelocity * Time.deltaTime);
+    }
+
+    public void SetMovementEnabled(bool enabled)
+    {
+        movementEnabled = enabled;
+        Debug.Log($"[PLAYER DEBUG] Movement enabled set to: {movementEnabled} on {gameObject.name}");
     }
 }
