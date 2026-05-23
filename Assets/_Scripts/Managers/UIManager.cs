@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HUDView hudView;
     [SerializeField] private InteractionPromptView interactionPromptView;
     [SerializeField] private QTEView qteView;
+    [SerializeField] private DayEndReportView dayEndReportView;
 
     private void Awake()
     {
@@ -20,6 +22,7 @@ public class UIManager : MonoBehaviour
     {
         EconomyManager.OnBankrollChanged += HandleBankrollChanged;
         GameManager.OnDayStarted += HandleDayStarted;
+        GameManager.OnDayEnded += HandleDayEnded;
         PlayerInteractor.OnShowPrompt += HandleShowPrompt;
         PlayerInteractor.OnHidePrompt += HandleHidePrompt;
     }
@@ -28,8 +31,22 @@ public class UIManager : MonoBehaviour
     {
         EconomyManager.OnBankrollChanged -= HandleBankrollChanged;
         GameManager.OnDayStarted -= HandleDayStarted;
+        GameManager.OnDayEnded -= HandleDayEnded;
         PlayerInteractor.OnShowPrompt -= HandleShowPrompt;
         PlayerInteractor.OnHidePrompt -= HandleHidePrompt;
+    }
+
+    private void Start()
+    {
+        if (hudView == null) return;
+
+        if (EconomyManager.Instance != null)
+            hudView.UpdateBankroll(EconomyManager.Instance.CurrentBankroll);
+
+        if (GameManager.Instance != null)
+            hudView.UpdateDay(GameManager.Instance.CurrentDay);
+
+        hudView.UpdateDayProgress(0f);
     }
 
     private void Update()
@@ -38,16 +55,34 @@ public class UIManager : MonoBehaviour
     }
 
 
+
     private void HandleBankrollChanged(float newAmount)
     {
-        if (hudView == null) return;
-        hudView.UpdateBankroll(newAmount);
+        if (hudView != null)
+            hudView.UpdateBankroll(newAmount);
     }
 
     private void HandleDayStarted()
     {
-        if (hudView == null) return;
-        hudView.UpdateDay(GameManager.Instance.CurrentDay);
+        if (hudView != null)
+            hudView.UpdateDay(GameManager.Instance.CurrentDay);
+    }
+
+    private void HandleDayEnded()
+    {
+        StartCoroutine(ShowDayEndReportNextFrame());
+    }
+
+    private IEnumerator ShowDayEndReportNextFrame()
+    {
+        yield return null; 
+
+        if (dayEndReportView == null) yield break;
+
+        int dayCompleted = GameManager.Instance.CurrentDay - 1;
+        float bankroll = EconomyManager.Instance.CurrentBankroll;
+
+        dayEndReportView.Show(dayCompleted, bankroll);
     }
 
     private void UpdateDayProgressBar()
@@ -61,14 +96,14 @@ public class UIManager : MonoBehaviour
 
     private void HandleShowPrompt(string message)
     {
-        if (interactionPromptView == null) return;
-        interactionPromptView.ShowPrompt(message);
+        if (interactionPromptView != null)
+            interactionPromptView.ShowPrompt(message);
     }
 
     private void HandleHidePrompt()
     {
-        if (interactionPromptView == null) return;
-        interactionPromptView.HidePrompt();
+        if (interactionPromptView != null)
+            interactionPromptView.HidePrompt();
     }
 
 
@@ -80,8 +115,12 @@ public class UIManager : MonoBehaviour
         hudView.UpdateDayProgress(dayProgress);
     }
 
-    public void ShowGameOverScreen() { }          
-    public void ShowDayEndReport() { }            
-    public void ShowCheaterCaughtFeedback() { }   
+    public void ShowDayEndReport()
+    {
+        HandleDayEnded();
+    }
+
+    public void ShowGameOverScreen() { }           
+    public void ShowCheaterCaughtFeedback() { }    
     public void ShowWrongAccusationFeedback() { }  
 }
