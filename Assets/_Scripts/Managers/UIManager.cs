@@ -14,7 +14,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameOverView gameOverView;
     [SerializeField] private FeedbackView feedbackView;
     [SerializeField] private PauseMenuView pauseMenuView;
-
+    [SerializeField] private SettingsView settingsView;
+    
     private void Awake()
     {
         if (Instance != null) { Destroy(gameObject); return; }
