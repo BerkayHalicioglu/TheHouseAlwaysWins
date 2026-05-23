@@ -14,8 +14,6 @@ public class DayEndReportView : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);
-
         if (continueButton != null)
             continueButton.onClick.AddListener(OnContinueClicked);
     }

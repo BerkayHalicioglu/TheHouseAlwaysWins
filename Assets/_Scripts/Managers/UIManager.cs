@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private InteractionPromptView interactionPromptView;
     [SerializeField] private QTEView qteView;
     [SerializeField] private DayEndReportView dayEndReportView;
+    [SerializeField] private GameOverView gameOverView;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
         EconomyManager.OnBankrollChanged += HandleBankrollChanged;
         GameManager.OnDayStarted += HandleDayStarted;
         GameManager.OnDayEnded += HandleDayEnded;
+        GameManager.OnGameOver += HandleGameOver;
         PlayerInteractor.OnShowPrompt += HandleShowPrompt;
         PlayerInteractor.OnHidePrompt += HandleHidePrompt;
     }
@@ -32,6 +34,7 @@ public class UIManager : MonoBehaviour
         EconomyManager.OnBankrollChanged -= HandleBankrollChanged;
         GameManager.OnDayStarted -= HandleDayStarted;
         GameManager.OnDayEnded -= HandleDayEnded;
+        GameManager.OnGameOver -= HandleGameOver;
         PlayerInteractor.OnShowPrompt -= HandleShowPrompt;
         PlayerInteractor.OnHidePrompt -= HandleHidePrompt;
     }
@@ -54,8 +57,6 @@ public class UIManager : MonoBehaviour
         UpdateDayProgressBar();
     }
 
-
-
     private void HandleBankrollChanged(float newAmount)
     {
         if (hudView != null)
@@ -75,14 +76,31 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator ShowDayEndReportNextFrame()
     {
-        yield return null; 
+        yield return null;
 
         if (dayEndReportView == null) yield break;
+
+        // game over tetiklenirse gün sonu raporu yok
+        if (GameManager.Instance.CurrentState == GameState.GameOver) yield break;
 
         int dayCompleted = GameManager.Instance.CurrentDay - 1;
         float bankroll = EconomyManager.Instance.CurrentBankroll;
 
         dayEndReportView.Show(dayCompleted, bankroll);
+    }
+
+    private void HandleGameOver()
+    {
+        // gün sonu raporunu gizlemek için
+        if (dayEndReportView != null)
+            dayEndReportView.gameObject.SetActive(false);
+
+        if (gameOverView == null) return;
+
+        int daysSurvived = GameManager.Instance.CurrentDay - 1;
+        float finalBankroll = EconomyManager.Instance.CurrentBankroll;
+
+        gameOverView.Show(daysSurvived, finalBankroll);
     }
 
     private void UpdateDayProgressBar()
@@ -107,7 +125,6 @@ public class UIManager : MonoBehaviour
     }
 
 
-
     public void UpdateHUD(float bankroll, float dayProgress)
     {
         if (hudView == null) return;
@@ -120,7 +137,11 @@ public class UIManager : MonoBehaviour
         HandleDayEnded();
     }
 
-    public void ShowGameOverScreen() { }           
-    public void ShowCheaterCaughtFeedback() { }    
-    public void ShowWrongAccusationFeedback() { }  
+    public void ShowGameOverScreen()
+    {
+        HandleGameOver();
+    }
+
+    public void ShowCheaterCaughtFeedback() { }
+    public void ShowWrongAccusationFeedback() { }
 }
