@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [Header("Views")]
     [SerializeField] private HUDView hudView;
     [SerializeField] private InteractionPromptView interactionPromptView;
+    [SerializeField] private QTEView qteView;
 
     private void Awake()
     {
