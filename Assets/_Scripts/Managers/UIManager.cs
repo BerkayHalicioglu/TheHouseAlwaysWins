@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private DayEndReportView dayEndReportView;
     [SerializeField] private GameOverView gameOverView;
     [SerializeField] private FeedbackView feedbackView;
+    [SerializeField] private PauseMenuView pauseMenuView;
 
     private void Awake()
     {
@@ -60,6 +62,19 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         UpdateDayProgressBar();
+        HandlePauseInput();
+    }
+
+    private void HandlePauseInput()
+    {
+        if (Keyboard.current == null) return;
+        if (pauseMenuView == null) return;
+        if (!Keyboard.current.tabKey.wasPressedThisFrame) return;
+
+        if (pauseMenuView.IsPaused)
+            pauseMenuView.Resume();
+        else
+            pauseMenuView.Pause();
     }
 
 
