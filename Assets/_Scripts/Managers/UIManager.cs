@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private QTEView qteView;
     [SerializeField] private DayEndReportView dayEndReportView;
     [SerializeField] private GameOverView gameOverView;
+    [SerializeField] private FeedbackView feedbackView;
 
     private void Awake()
     {
@@ -27,6 +28,8 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameOver += HandleGameOver;
         PlayerInteractor.OnShowPrompt += HandleShowPrompt;
         PlayerInteractor.OnHidePrompt += HandleHidePrompt;
+        CustomerAI.OnCheaterCaught += HandleCheaterCaught;
+        CustomerAI.OnWrongAccusation += HandleWrongAccusation;
     }
 
     private void OnDisable()
@@ -37,6 +40,8 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameOver -= HandleGameOver;
         PlayerInteractor.OnShowPrompt -= HandleShowPrompt;
         PlayerInteractor.OnHidePrompt -= HandleHidePrompt;
+        CustomerAI.OnCheaterCaught -= HandleCheaterCaught;
+        CustomerAI.OnWrongAccusation -= HandleWrongAccusation;
     }
 
     private void Start()
@@ -56,6 +61,7 @@ public class UIManager : MonoBehaviour
     {
         UpdateDayProgressBar();
     }
+
 
     private void HandleBankrollChanged(float newAmount)
     {
@@ -79,8 +85,6 @@ public class UIManager : MonoBehaviour
         yield return null;
 
         if (dayEndReportView == null) yield break;
-
-        // game over tetiklenirse gün sonu raporu yok
         if (GameManager.Instance.CurrentState == GameState.GameOver) yield break;
 
         int dayCompleted = GameManager.Instance.CurrentDay - 1;
@@ -91,7 +95,6 @@ public class UIManager : MonoBehaviour
 
     private void HandleGameOver()
     {
-        // gün sonu raporunu gizlemek için
         if (dayEndReportView != null)
             dayEndReportView.gameObject.SetActive(false);
 
@@ -101,6 +104,18 @@ public class UIManager : MonoBehaviour
         float finalBankroll = EconomyManager.Instance.CurrentBankroll;
 
         gameOverView.Show(daysSurvived, finalBankroll);
+    }
+
+    private void HandleCheaterCaught(float amount)
+    {
+        if (feedbackView != null)
+            feedbackView.ShowCheaterCaught(amount);
+    }
+
+    private void HandleWrongAccusation(float amount)
+    {
+        if (feedbackView != null)
+            feedbackView.ShowWrongAccusation(amount);
     }
 
     private void UpdateDayProgressBar()
@@ -132,16 +147,18 @@ public class UIManager : MonoBehaviour
         hudView.UpdateDayProgress(dayProgress);
     }
 
-    public void ShowDayEndReport()
+    public void ShowDayEndReport() { HandleDayEnded(); }
+    public void ShowGameOverScreen() { HandleGameOver(); }
+
+    public void ShowCheaterCaughtFeedback()
     {
-        HandleDayEnded();
+        if (feedbackView != null)
+            feedbackView.ShowCheaterCaught(500f);
     }
 
-    public void ShowGameOverScreen()
+    public void ShowWrongAccusationFeedback()
     {
-        HandleGameOver();
+        if (feedbackView != null)
+            feedbackView.ShowWrongAccusation(250f);
     }
-
-    public void ShowCheaterCaughtFeedback() { }
-    public void ShowWrongAccusationFeedback() { }
 }
