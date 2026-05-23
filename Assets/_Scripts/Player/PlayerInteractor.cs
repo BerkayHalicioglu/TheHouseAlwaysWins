@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,12 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] private float interactionDistance = 3f;
     [SerializeField] private LayerMask suspectLayer;
     [SerializeField] private LayerMask tableLayer;
+//ibo
+    private string lastPromptMessage;
+    
+    // UI Action event ibo
+    public static event Action<string> OnShowPrompt; 
+    public static event Action OnHidePrompt;
 
     private void Start()
     {
@@ -30,12 +37,17 @@ public class PlayerInteractor : MonoBehaviour
         if (Keyboard.current == null)
             return;
 
+        /// frame kontrolü ibo
+        CheckInteractionRange();
+
         if (Keyboard.current.eKey.wasPressedThisFrame)
             TryInteract();
 
         if (Keyboard.current.fKey.wasPressedThisFrame)
             TryDealCards();
     }
+
+    
 
     private void TryInteract()
     {
@@ -75,5 +87,42 @@ public class PlayerInteractor : MonoBehaviour
                 cardDealable.DealCards();
             }
         }
+    }
+
+    /// oyuncu interaction range kontrolü ibo
+    private void CheckInteractionRange()
+    {
+        if (cameraTransform == null) return;
+
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        string newPrompt = null;
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, interactionDistance, suspectLayer))
+        {
+            IInteractable interactable =
+                hitInfo.collider.GetComponent<IInteractable>() ??
+                hitInfo.collider.GetComponentInParent<IInteractable>();
+
+            if (interactable != null)
+                newPrompt = "Press E to Interrogate";
+        }
+        else if (Physics.Raycast(ray, out RaycastHit tableHit, interactionDistance, tableLayer))
+        {
+            ICardDealable cardDealable =
+                tableHit.collider.GetComponent<ICardDealable>() ??
+                tableHit.collider.GetComponentInParent<ICardDealable>();
+
+            if (cardDealable != null)
+                newPrompt = "Press F to Deal Cards";
+        }
+
+        if (newPrompt == lastPromptMessage) return; 
+
+        lastPromptMessage = newPrompt;
+
+        if (newPrompt != null)
+            OnShowPrompt?.Invoke(newPrompt);
+        else
+            OnHidePrompt?.Invoke();
     }
 }

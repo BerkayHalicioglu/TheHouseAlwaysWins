@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Views")]
     [SerializeField] private HUDView hudView;
+    [SerializeField] private InteractionPromptView interactionPromptView;
 
     private void Awake()
     {
@@ -18,33 +19,23 @@ public class UIManager : MonoBehaviour
     {
         EconomyManager.OnBankrollChanged += HandleBankrollChanged;
         GameManager.OnDayStarted += HandleDayStarted;
+        PlayerInteractor.OnShowPrompt += HandleShowPrompt;
+        PlayerInteractor.OnHidePrompt += HandleHidePrompt;
     }
 
     private void OnDisable()
     {
         EconomyManager.OnBankrollChanged -= HandleBankrollChanged;
         GameManager.OnDayStarted -= HandleDayStarted;
+        PlayerInteractor.OnShowPrompt -= HandleShowPrompt;
+        PlayerInteractor.OnHidePrompt -= HandleHidePrompt;
     }
-
-    private void Start()
-{
-    if (hudView == null) return;
-
-    if (EconomyManager.Instance != null)
-        hudView.UpdateBankroll(EconomyManager.Instance.CurrentBankroll);
-
-    if (GameManager.Instance != null)
-        hudView.UpdateDay(GameManager.Instance.CurrentDay);
-
-    hudView.UpdateDayProgress(0f);
-}
 
     private void Update()
     {
         UpdateDayProgressBar();
     }
 
-    //  Event Handlers 
 
     private void HandleBankrollChanged(float newAmount)
     {
@@ -67,7 +58,19 @@ public class UIManager : MonoBehaviour
         hudView.UpdateDayProgress(GameManager.Instance.GetDayProgress());
     }
 
-    // Public API 
+    private void HandleShowPrompt(string message)
+    {
+        if (interactionPromptView == null) return;
+        interactionPromptView.ShowPrompt(message);
+    }
+
+    private void HandleHidePrompt()
+    {
+        if (interactionPromptView == null) return;
+        interactionPromptView.HidePrompt();
+    }
+
+
 
     public void UpdateHUD(float bankroll, float dayProgress)
     {
@@ -76,8 +79,8 @@ public class UIManager : MonoBehaviour
         hudView.UpdateDayProgress(dayProgress);
     }
 
-    public void ShowGameOverScreen() { }       // Step 5
-    public void ShowDayEndReport() { }         // Step 4
-    public void ShowCheaterCaughtFeedback() { } // Step 6
-    public void ShowWrongAccusationFeedback() { } // Step 6
+    public void ShowGameOverScreen() { }          
+    public void ShowDayEndReport() { }            
+    public void ShowCheaterCaughtFeedback() { }   
+    public void ShowWrongAccusationFeedback() { }  
 }
