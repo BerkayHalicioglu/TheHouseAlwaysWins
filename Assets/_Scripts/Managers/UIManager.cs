@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private FeedbackView feedbackView;
     [SerializeField] private PauseMenuView pauseMenuView;
     [SerializeField] private SettingsView settingsView;
-    
+
     private void Awake()
     {
         if (Instance != null) { Destroy(gameObject); return; }
@@ -25,6 +26,7 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         EconomyManager.OnBankrollChanged += HandleBankrollChanged;
         GameManager.OnDayStarted += HandleDayStarted;
         GameManager.OnDayEnded += HandleDayEnded;
@@ -37,6 +39,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         EconomyManager.OnBankrollChanged -= HandleBankrollChanged;
         GameManager.OnDayStarted -= HandleDayStarted;
         GameManager.OnDayEnded -= HandleDayEnded;
@@ -47,7 +50,23 @@ public class UIManager : MonoBehaviour
         CustomerAI.OnWrongAccusation -= HandleWrongAccusation;
     }
 
-    private void Start()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "CasinoFloor") return;
+
+        hudView = Object.FindFirstObjectByType<HUDView>(FindObjectsInactive.Include);
+        interactionPromptView = Object.FindFirstObjectByType<InteractionPromptView>(FindObjectsInactive.Include);
+        qteView = Object.FindFirstObjectByType<QTEView>(FindObjectsInactive.Include);
+        dayEndReportView = Object.FindFirstObjectByType<DayEndReportView>(FindObjectsInactive.Include);
+        gameOverView = Object.FindFirstObjectByType<GameOverView>(FindObjectsInactive.Include);
+        feedbackView = Object.FindFirstObjectByType<FeedbackView>(FindObjectsInactive.Include);
+        pauseMenuView = Object.FindFirstObjectByType<PauseMenuView>(FindObjectsInactive.Include);
+        settingsView = Object.FindFirstObjectByType<SettingsView>(FindObjectsInactive.Include);
+
+        InitializeHUD();
+    }
+
+    private void InitializeHUD()
     {
         if (hudView == null) return;
 
