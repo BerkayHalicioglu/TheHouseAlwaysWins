@@ -10,7 +10,10 @@ public class QTEManager : MonoBehaviour
     private bool qteActive;
     private float timer;
     private PlayerController activePlayerController;
-
+    // ibo
+    public static event System.Action<UnityEngine.InputSystem.Key, float> OnQTEStarted;
+    public static event System.Action OnQTESuccess;
+    public static event System.Action OnQTEFailed;
 
 
     public void StartQTE(PlayerController playerController)
@@ -25,7 +28,9 @@ public class QTEManager : MonoBehaviour
         SetPlayerMovement(false);
 
         Debug.Log($"[QTE] Started. Press: {expectedKey}");
-        Debug.Log("[UI HOOK] Show QTE prompt on screen");
+        //ibo
+        OnQTEStarted?.Invoke(expectedKey, qteTimeLimit);
+       // Debug.Log("[UI HOOK] Show QTE prompt on screen");
     }
 
     private void Update()
@@ -80,7 +85,9 @@ public class QTEManager : MonoBehaviour
         SetPlayerMovement(true);
 
         Debug.Log("[QTE] Success");
-        Debug.Log("[UI HOOK] Show QTE success feedback");
+        //ibo
+        OnQTESuccess?.Invoke();
+       // Debug.Log("[UI HOOK] Show QTE success feedback");
     }
 
     private void FailQTE(string reason)
@@ -89,7 +96,9 @@ public class QTEManager : MonoBehaviour
         SetPlayerMovement(true);
 
         Debug.Log($"[QTE] Failed: {reason}");
-        Debug.Log("[UI HOOK] Show QTE failed feedback");
+        //ibo
+        OnQTEFailed?.Invoke();
+       // Debug.Log("[UI HOOK] Show QTE failed feedback");
     }
 
     private void SetPlayerMovement(bool enabled)

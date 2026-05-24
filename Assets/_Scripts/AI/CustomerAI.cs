@@ -12,7 +12,13 @@ public class CustomerAI : MonoBehaviour, IInteractable
     [SerializeField] private float minPlayAfterCheat = 15f; // last for 15 seconds
     [SerializeField] private float minActivityDuration = 20f;
     [SerializeField] private float maxActivityDuration = 45f;
+    // sorgu sonucu UI İbo
+    [Header("Interrogation Rewards")]
+    [SerializeField] private float cheaterCatchReward = 500f;
+    [SerializeField] private float wrongAccusationPenalty = 250f;
 
+    public static event System.Action<float> OnCheaterCaught;
+    public static event System.Action<float> OnWrongAccusation;
 
     [Header("Movement")]
     [SerializeField] private float destinationReachedDistance = 0.5f;
@@ -432,7 +438,9 @@ public class CustomerAI : MonoBehaviour, IInteractable
         {
             return;
         }
-
+        EconomyManager.Instance.DeductMoney(wrongAccusationPenalty);
+        OnWrongAccusation?.Invoke(wrongAccusationPenalty);
+        
         LeaveCasino();
       }
        // sorgu UI veya player mechanics NPC'yi arka odaya gönderince çağıracak
@@ -459,6 +467,8 @@ public class CustomerAI : MonoBehaviour, IInteractable
         {
             indicator.Hide();
         }
+        EconomyManager.Instance.AddMoney(cheaterCatchReward);
+        OnCheaterCaught?.Invoke(cheaterCatchReward);
       }
     // hileci NPC yakalanmadan bırakılırsa çıkışa göndermek için çağrılacak
     public void MissCheater()

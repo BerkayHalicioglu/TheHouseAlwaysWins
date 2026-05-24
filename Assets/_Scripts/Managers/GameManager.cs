@@ -39,11 +39,24 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject); // Sahneler arası silinmez
     }
-
+// oyun başlar başlamaz gün1 den alıyor (ibo)
     private void Start()
     {
-        ChangeState(GameState.MainMenu);
+        if (SceneManager.GetActiveScene().name == "CasinoFloor")
+        {
+            CurrentDay = 1;
+            StartDay();
+        }
+        else
+        {
+            ChangeState(GameState.MainMenu);
+        }
     }
+
+//    private void Start()
+//  {
+//    ChangeState(GameState.MainMenu);
+//}
 
     private void Update()
     {

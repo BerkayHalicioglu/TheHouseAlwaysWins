@@ -18,6 +18,9 @@ public class PlayerLook : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        // mouse sensivity için eklendi ibo
+        float saved = PlayerPrefs.GetFloat("Sensitivity", mouseSensitivity);
+        mouseSensitivity = saved;
     }
 
     private void Update()
@@ -39,5 +42,11 @@ public class PlayerLook : MonoBehaviour
         }
 
         transform.Rotate(Vector3.up * mouseX);
+    }
+
+//mouse ibo
+    public void SetSensitivity(float value)
+    {
+        mouseSensitivity = value;
     }
 }
