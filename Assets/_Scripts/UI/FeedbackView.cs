@@ -60,6 +60,62 @@ public class FeedbackView : MonoBehaviour
         Show();
     }
 
+    public void ShowInnocentCompensation(float amount)
+    {
+        if (titleText != null)
+        {
+            titleText.text = "THEY WERE INNOCENT!";
+            titleText.color = Color.red;
+        }
+
+        if (amountText != null)
+        {
+            amountText.text = $"-${amount:N0} Compensation";
+            amountText.color = Color.red;
+        }
+
+        PlaySound(errorSound);
+        Show();
+    }
+
+    public void ShowCorrectRelease(float amount)
+    {
+        if (titleText != null)
+        {
+            titleText.text = "CORRECT CALL!";
+            titleText.color = Color.green;
+        }
+
+        if (amountText != null)
+        {
+            amountText.text = $"+${amount:N0}";
+            amountText.color = Color.green;
+        }
+
+        PlaySound(successSound);
+        Show();
+    }
+
+    public void ShowCheaterMissed(float amount)
+    {
+        Color orange = new Color(1f, 0.5f, 0f);
+
+        if (titleText != null)
+        {
+            titleText.text = "CHEATER ESCAPED!";
+            titleText.color = orange;
+        }
+
+        if (amountText != null)
+        {
+            amountText.text = $"-${amount:N0}";
+            amountText.color = orange;
+        }
+
+        PlaySound(errorSound);
+        Show();
+    }
+
     private void Show()
     {
         StopAllCoroutines();

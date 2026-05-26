@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HUDView hudView;
     [SerializeField] private InteractionPromptView interactionPromptView;
     [SerializeField] private QTEView qteView;
+    [SerializeField] private InterrogationView interrogationView;
     [SerializeField] private DayEndReportView dayEndReportView;
     [SerializeField] private GameOverView gameOverView;
     [SerializeField] private FeedbackView feedbackView;
@@ -34,7 +35,9 @@ public class UIManager : MonoBehaviour
         PlayerInteractor.OnShowPrompt += HandleShowPrompt;
         PlayerInteractor.OnHidePrompt += HandleHidePrompt;
         CustomerAI.OnCheaterCaught += HandleCheaterCaught;
-        CustomerAI.OnWrongAccusation += HandleWrongAccusation;
+        CustomerAI.OnInnocentSentToBackRoom += HandleInnocentSentToBackRoom;
+        CustomerAI.OnCheaterMissed += HandleCheaterMissed;
+        CustomerAI.OnCorrectRelease += HandleCorrectRelease;
     }
 
     private void OnDisable()
@@ -47,7 +50,9 @@ public class UIManager : MonoBehaviour
         PlayerInteractor.OnShowPrompt -= HandleShowPrompt;
         PlayerInteractor.OnHidePrompt -= HandleHidePrompt;
         CustomerAI.OnCheaterCaught -= HandleCheaterCaught;
-        CustomerAI.OnWrongAccusation -= HandleWrongAccusation;
+        CustomerAI.OnInnocentSentToBackRoom -= HandleInnocentSentToBackRoom;
+        CustomerAI.OnCheaterMissed -= HandleCheaterMissed;
+        CustomerAI.OnCorrectRelease -= HandleCorrectRelease;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -60,6 +65,7 @@ public class UIManager : MonoBehaviour
         dayEndReportView = Object.FindFirstObjectByType<DayEndReportView>(FindObjectsInactive.Include);
         gameOverView = Object.FindFirstObjectByType<GameOverView>(FindObjectsInactive.Include);
         feedbackView = Object.FindFirstObjectByType<FeedbackView>(FindObjectsInactive.Include);
+        interrogationView = Object.FindFirstObjectByType<InterrogationView>(FindObjectsInactive.Include);
         pauseMenuView = Object.FindFirstObjectByType<PauseMenuView>(FindObjectsInactive.Include);
         settingsView = Object.FindFirstObjectByType<SettingsView>(FindObjectsInactive.Include);
 
@@ -147,10 +153,22 @@ public class UIManager : MonoBehaviour
             feedbackView.ShowCheaterCaught(amount);
     }
 
-    private void HandleWrongAccusation(float amount)
+    private void HandleInnocentSentToBackRoom(float amount)
     {
         if (feedbackView != null)
-            feedbackView.ShowWrongAccusation(amount);
+            feedbackView.ShowInnocentCompensation(amount);
+    }
+
+    private void HandleCheaterMissed(float amount)
+    {
+        if (feedbackView != null)
+            feedbackView.ShowCheaterMissed(amount);
+    }
+
+    private void HandleCorrectRelease(float amount)
+    {
+        if (feedbackView != null)
+            feedbackView.ShowCorrectRelease(amount);
     }
 
     private void UpdateDayProgressBar()

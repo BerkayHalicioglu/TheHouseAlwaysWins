@@ -12,13 +12,19 @@ public class CustomerAI : MonoBehaviour, IInteractable
     [SerializeField] private float minPlayAfterCheat = 15f; // last for 15 seconds
     [SerializeField] private float minActivityDuration = 20f;
     [SerializeField] private float maxActivityDuration = 45f;
+    [SerializeField, Range(0f, 1f)] private float falseSuspicionChance = 0.3f;
     // sorgu sonucu UI İbo
     [Header("Interrogation Rewards")]
     [SerializeField] private float cheaterCatchReward = 500f;
-    [SerializeField] private float wrongAccusationPenalty = 250f;
+    [SerializeField] private float innocentCompensation = 300f;
+    [SerializeField] private float missedCheaterPenalty = 150f;
+    [SerializeField] private float correctReleaseReward = 100f;
 
     public static event System.Action<float> OnCheaterCaught;
-    public static event System.Action<float> OnWrongAccusation;
+    public static event System.Action<float> OnInnocentSentToBackRoom;
+    public static event System.Action<float> OnCheaterMissed;
+    public static event System.Action<float> OnCorrectRelease;
+    public static event System.Action<CustomerAI> OnInterrogationStarted;
 
     [Header("Movement")]
     [SerializeField] private float destinationReachedDistance = 0.5f;
@@ -37,16 +43,18 @@ public class CustomerAI : MonoBehaviour, IInteractable
     private RouletteTable currentRouletteTable; // roulette table
     private BarTable currentBarTable; // bar table
 
-    private float playTimer; // counts play time
-    private float cheatTimer; // counts cheat time
+    private float playTimer;
+    private float cheatTimer;
     private float activityTimer;
+    private bool willLookSuspicious;
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>(); // navmesh is a must for npc to make it walk
     }
 
     private void Start() {
-        IsCheater = Random.value < cheatChance; // if random value is lower than prob, that npc is cheater
+        IsCheater = Random.value < cheatChance;
+        willLookSuspicious = IsCheater || Random.value < falseSuspicionChance;
         CurrentState = CustomerState.Idle; // start state of npc (will change due its behaviour)
 
         if (!TryPlaceOnNavMesh())
@@ -380,7 +388,7 @@ public class CustomerAI : MonoBehaviour, IInteractable
       private void UpdatePlayingBlackjack() 
       {
         playTimer += Time.deltaTime;
-        if (IsCheater && playTimer >= cheatTimer) // if playTimer gets higher or equeal to cheatTimer that npc becomes suspicious
+        if (willLookSuspicious && playTimer >= cheatTimer)
         {
             BecomeSuspicious();
             return;
@@ -430,26 +438,33 @@ public class CustomerAI : MonoBehaviour, IInteractable
         {
             indicator.Hide();
         }
+
+        OnInterrogationStarted?.Invoke(this);
       }
-      // İbrahim'in sorgu UI sistemi sorgu bittikten sonra NPC'yi serbest bırakınca çağıracak
-      public void ReleaseFromInterrogation() // if innocent go out
+
+      public void ReleaseFromInterrogation()
       {
         if (CurrentState != CustomerState.Interrogating)
-        {
             return;
+
+        if (IsCheater)
+        {
+            EconomyManager.Instance.DeductMoney(missedCheaterPenalty);
+            OnCheaterMissed?.Invoke(missedCheaterPenalty);
         }
-        EconomyManager.Instance.DeductMoney(wrongAccusationPenalty);
-        OnWrongAccusation?.Invoke(wrongAccusationPenalty);
-        
+        else
+        {
+            EconomyManager.Instance.AddMoney(correctReleaseReward);
+            OnCorrectRelease?.Invoke(correctReleaseReward);
+        }
+
         LeaveCasino();
       }
-       // sorgu UI veya player mechanics NPC'yi arka odaya gönderince çağıracak
-      public void SendToBackRoom() // backroom sending script (ibo burası sende UI sonucu için burayı alacaksın)
+
+      public void SendToBackRoom()
       {
         if (CurrentState != CustomerState.Interrogating && CurrentState != CustomerState.Suspicious)
-        {
             return;
-        }
 
         CanBeInteractedWith = false;
         CurrentState = CustomerState.EscortedToBackRoom;
@@ -464,11 +479,18 @@ public class CustomerAI : MonoBehaviour, IInteractable
 
         SuspicionIndicator indicator = GetComponentInChildren<SuspicionIndicator>(true);
         if (indicator != null)
-        {
             indicator.Hide();
+
+        if (IsCheater)
+        {
+            EconomyManager.Instance.AddMoney(cheaterCatchReward);
+            OnCheaterCaught?.Invoke(cheaterCatchReward);
         }
-        EconomyManager.Instance.AddMoney(cheaterCatchReward);
-        OnCheaterCaught?.Invoke(cheaterCatchReward);
+        else
+        {
+            EconomyManager.Instance.DeductMoney(innocentCompensation);
+            OnInnocentSentToBackRoom?.Invoke(innocentCompensation);
+        }
       }
     // hileci NPC yakalanmadan bırakılırsa çıkışa göndermek için çağrılacak
     public void MissCheater()

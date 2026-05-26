@@ -5,32 +5,45 @@ public class QTEManager : MonoBehaviour
 {
     [Header("QTE Settings")]
     [SerializeField] private float qteTimeLimit = 3f;
+    [SerializeField] private PlayerController playerController;
 
     private Key expectedKey;
     private bool qteActive;
     private float timer;
-    private PlayerController activePlayerController;
-    // ibo
+    private CustomerAI currentTarget;
+
     public static event System.Action<UnityEngine.InputSystem.Key, float> OnQTEStarted;
     public static event System.Action OnQTESuccess;
     public static event System.Action OnQTEFailed;
+    public static event System.Action<CustomerAI> OnInterrogationQTESuccess;
 
-
-    public void StartQTE(PlayerController playerController)
+    private void OnEnable()
     {
-        activePlayerController = playerController;
-        Debug.Log($"[QTE DEBUG] Received PlayerController: {(activePlayerController != null ? activePlayerController.gameObject.name : "NULL")}");
+        CustomerAI.OnInterrogationStarted += HandleInterrogationStarted;
+    }
+
+    private void OnDisable()
+    {
+        CustomerAI.OnInterrogationStarted -= HandleInterrogationStarted;
+    }
+
+    private void HandleInterrogationStarted(CustomerAI target)
+    {
+        currentTarget = target;
+        StartQTE();
+    }
+
+    private void StartQTE()
+    {
+        if (playerController == null)
+            Debug.LogWarning("[QTE] PlayerController is not assigned.");
 
         expectedKey = GetRandomKey();
         timer = qteTimeLimit;
         qteActive = true;
 
         SetPlayerMovement(false);
-
-        Debug.Log($"[QTE] Started. Press: {expectedKey}");
-        //ibo
         OnQTEStarted?.Invoke(expectedKey, qteTimeLimit);
-       // Debug.Log("[UI HOOK] Show QTE prompt on screen");
     }
 
     private void Update()
@@ -83,34 +96,26 @@ public class QTEManager : MonoBehaviour
     {
         qteActive = false;
         SetPlayerMovement(true);
-
-        Debug.Log("[QTE] Success");
-        //ibo
         OnQTESuccess?.Invoke();
-       // Debug.Log("[UI HOOK] Show QTE success feedback");
+        OnInterrogationQTESuccess?.Invoke(currentTarget);
+        currentTarget = null;
     }
 
     private void FailQTE(string reason)
     {
         qteActive = false;
         SetPlayerMovement(true);
-
-        Debug.Log($"[QTE] Failed: {reason}");
-        //ibo
         OnQTEFailed?.Invoke();
-       // Debug.Log("[UI HOOK] Show QTE failed feedback");
+        currentTarget?.MissCheater();
+        currentTarget = null;
     }
 
     private void SetPlayerMovement(bool enabled)
     {
-        if (activePlayerController != null)
-        {
-            activePlayerController.SetMovementEnabled(enabled);
-        }
+        if (playerController != null)
+            playerController.SetMovementEnabled(enabled);
         else
-        {
-            Debug.LogWarning("[QTE] Active PlayerController reference is missing.");
-        }
+            Debug.LogWarning("[QTE] PlayerController reference is missing.");
     }
 
     private Key GetRandomKey()
