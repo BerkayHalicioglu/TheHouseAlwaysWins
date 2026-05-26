@@ -11,57 +11,16 @@ public class GameTableInteraction : MonoBehaviour, ICardDealable
     [Header("Table Settings")]
     [SerializeField] private string tableName = "Game Table";
     [SerializeField] private GameTableType tableType;
-    [SerializeField] private QTEManager qteManager;
-    [SerializeField] private PlayerController playerController;
     [SerializeField] private BlackjackLogic blackjackLogic;
     [SerializeField] private BetManager betManager;
 
     private void Awake()
     {
-        if (playerController == null)
-        {
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
-            if (playerObject != null)
-            {
-                playerController = playerObject.GetComponent<PlayerController>();
-            }
-        }
-
-        if (qteManager == null)
-        {
-            qteManager = FindFirstObjectByType<QTEManager>();
-        }
-
         if (blackjackLogic == null)
-        {
             blackjackLogic = FindFirstObjectByType<BlackjackLogic>();
-        }
 
         if (betManager == null)
-        {
             betManager = FindFirstObjectByType<BetManager>();
-        }
-
-        if (playerController == null)
-        {
-            Debug.LogWarning("[GameTableInteraction] PlayerController could not be found. Make sure the Player object is tagged as Player.");
-        }
-
-        if (qteManager == null)
-        {
-            Debug.LogWarning("[GameTableInteraction] QTEManager could not be found in the scene.");
-        }
-
-        if (blackjackLogic == null)
-        {
-            Debug.LogWarning("[GameTableInteraction] BlackjackLogic could not be found in the scene.");
-        }
-
-        if (betManager == null)
-        {
-            Debug.LogWarning("[GameTableInteraction] BetManager could not be found in the scene.");
-        }
     }
 
     public void DealCards()
@@ -110,10 +69,6 @@ public class GameTableInteraction : MonoBehaviour, ICardDealable
             Debug.Log($"[BLACKJACK RESULT] {result} | Payout: {payout}");
         }
 
-        if (qteManager != null)
-        {
-            qteManager.StartQTE(playerController);
-        }
     }
 
     private void StartRouletteRound()
@@ -140,10 +95,6 @@ public class GameTableInteraction : MonoBehaviour, ICardDealable
         Debug.Log("[UI HOOK] Start roulette spin animation");
         Debug.Log("[UI HOOK] Display roulette result");
 
-        if (qteManager != null)
-        {
-            qteManager.StartQTE(playerController);
-        }
     }
 
     private int DrawCard()
