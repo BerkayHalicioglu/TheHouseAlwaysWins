@@ -249,8 +249,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameTableInteraction
   tableName: Blackjack Table
   tableType: 0
-  qteManager: {fileID: 0}
-  playerController: {fileID: 0}
   blackjackLogic: {fileID: 0}
   betManager: {fileID: 0}
 --- !u!1 &4551825209270629377
