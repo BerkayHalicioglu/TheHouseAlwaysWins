@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 137f786bb79d6954eb57c375aeb2800a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - musicSource: {instanceID: 0}
+  - ambianceSource: {instanceID: 0}
+  - crowdAmbiance: {fileID: 8300000, guid: 0bfe00e6acfdf3f428c707498187f6bc, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
