@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     private float dayTimer;
     public int CurrentDay { get; private set; } = 1;
 
+    private bool dayEndPending = false;
+    public bool IsInInterrogation { get; private set; }
+
     private void Awake()
     {
         // Singleton pattern
@@ -86,6 +89,7 @@ public class GameManager : MonoBehaviour
 
     public void StartDay()
     {
+        dayEndPending = false;
         dayTimer = dayDurationSeconds;
         ChangeState(GameState.CasinoFloor);
         OnDayStarted?.Invoke();
@@ -94,6 +98,13 @@ public class GameManager : MonoBehaviour
 
     public void EndDay()
     {
+        if (IsInInterrogation)
+        {
+            dayEndPending = true;
+            Debug.Log("[GameManager] Day ended during interrogation — waiting for player to return.");
+            return;
+        }
+
         CurrentDay++;
         ChangeState(GameState.DayEndReport);
         OnDayEnded?.Invoke();
@@ -101,12 +112,21 @@ public class GameManager : MonoBehaviour
 
     public void EnterBackRoom()
     {
-        ChangeState(GameState.BackRoom);
+        IsInInterrogation = true;
     }
 
     public void ExitBackRoom()
     {
-        ChangeState(GameState.CasinoFloor);
+        IsInInterrogation = false;
+
+        if (dayEndPending)
+        {
+            dayEndPending = false;
+            CurrentDay++;
+            ChangeState(GameState.DayEndReport);
+            OnDayEnded?.Invoke();
+            return;
+        }
     }
 
     public void TriggerGameOver()

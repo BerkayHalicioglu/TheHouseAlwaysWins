@@ -157,9 +157,11 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.CurrentState == GameState.GameOver) yield break;
 
         int dayCompleted = GameManager.Instance.CurrentDay - 1;
-        float bankroll = EconomyManager.Instance.CurrentBankroll;
+        DayStats stats = GameStatsManager.Instance != null
+            ? GameStatsManager.Instance.BuildStats()
+            : new DayStats { bankrollEnd = EconomyManager.Instance.CurrentBankroll };
 
-        dayEndReportView.Show(dayCompleted, bankroll);
+        dayEndReportView.Show(dayCompleted, stats);
     }
 
     private void HandleGameOver()

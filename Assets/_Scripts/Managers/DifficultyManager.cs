@@ -17,11 +17,16 @@ public class DifficultyManager : MonoBehaviour
     [SerializeField] private int customerCountDay1 = 15;
     [SerializeField] private int customerCountDayCap = 25;
 
+    [Header("False Suspicion Chance")]
+    [SerializeField] private float falseSuspicionChanceDay1 = 0.05f;
+    [SerializeField] private float falseSuspicionChanceDayCap = 0.25f;
+
     [Header("Daily Expense Multiplier")]
     [SerializeField] private float expenseMultiplierDay1 = 1f;
     [SerializeField] private float expenseMultiplierDayCap = 2f;
 
     public float CheatChance { get; private set; }
+    public float FalseSuspicionChance { get; private set; }
     public float SpawnInterval { get; private set; }
     public int TargetCustomerCount { get; private set; }
     public float ExpenseMultiplier { get; private set; }
@@ -55,13 +60,14 @@ public class DifficultyManager : MonoBehaviour
         int day = GameManager.Instance != null ? GameManager.Instance.CurrentDay : 1;
         float t = Mathf.Clamp01((float)(day - 1) / Mathf.Max(1, dayCap - 1));
 
-        CheatChance = Mathf.Lerp(cheatChanceDay1, cheatChanceDayCap, t);
-        SpawnInterval = Mathf.Lerp(spawnIntervalDay1, spawnIntervalDayCap, t);
-        TargetCustomerCount = Mathf.RoundToInt(Mathf.Lerp(customerCountDay1, customerCountDayCap, t));
-        ExpenseMultiplier = Mathf.Lerp(expenseMultiplierDay1, expenseMultiplierDayCap, t);
+        CheatChance          = Mathf.Lerp(cheatChanceDay1,          cheatChanceDayCap,          t);
+        FalseSuspicionChance = Mathf.Lerp(falseSuspicionChanceDay1, falseSuspicionChanceDayCap, t);
+        SpawnInterval        = Mathf.Lerp(spawnIntervalDay1,        spawnIntervalDayCap,        t);
+        TargetCustomerCount  = Mathf.RoundToInt(Mathf.Lerp(customerCountDay1, customerCountDayCap, t));
+        ExpenseMultiplier    = Mathf.Lerp(expenseMultiplierDay1,    expenseMultiplierDayCap,    t);
 
         OnDifficultyUpdated?.Invoke();
 
-        Debug.Log($"[Difficulty] Day {day} — CheatChance:{CheatChance:P0} SpawnInterval:{SpawnInterval:F1}s Customers:{TargetCustomerCount} ExpenseX:{ExpenseMultiplier:F2}");
+        Debug.Log($"[Difficulty] Day {day} — Cheat:{CheatChance:P0} FalseSuspicion:{FalseSuspicionChance:P0} Spawn:{SpawnInterval:F1}s Customers:{TargetCustomerCount} ExpenseX:{ExpenseMultiplier:F2}");
     }
 }
