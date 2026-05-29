@@ -53,6 +53,8 @@ public class SceneTransitionManager : MonoBehaviour
 
     private IEnumerator TransitionRoutine(CustomerAI target)
     {
+        GameManager.Instance?.EnterBackRoom();
+
         fadeCanvasGroup.blocksRaycasts = true;
 
         if (playerController != null)
@@ -165,5 +167,7 @@ public class SceneTransitionManager : MonoBehaviour
         fadeCanvasGroup.blocksRaycasts = false;
 
         onComplete?.Invoke();
+
+        GameManager.Instance?.ExitBackRoom();
     }
 }

@@ -56,8 +56,12 @@ public class CustomerAI : MonoBehaviour, IInteractable
         float effectiveCheatChance = DifficultyManager.Instance != null
             ? DifficultyManager.Instance.CheatChance
             : cheatChance;
+        float effectiveFalseSuspicion = DifficultyManager.Instance != null
+            ? DifficultyManager.Instance.FalseSuspicionChance
+            : falseSuspicionChance;
+
         IsCheater = Random.value < effectiveCheatChance;
-        willLookSuspicious = IsCheater || Random.value < falseSuspicionChance;
+        willLookSuspicious = IsCheater || Random.value < effectiveFalseSuspicion;
         CurrentState = CustomerState.Idle; // start state of npc (will change due its behaviour)
 
         if (!TryPlaceOnNavMesh())
