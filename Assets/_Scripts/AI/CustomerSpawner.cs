@@ -11,6 +11,23 @@ public class CustomerSpawner : MonoBehaviour
 
     private float spawnTimer;
 
+    private void OnEnable()
+    {
+        DifficultyManager.OnDifficultyUpdated += ApplyDifficulty;
+    }
+
+    private void OnDisable()
+    {
+        DifficultyManager.OnDifficultyUpdated -= ApplyDifficulty;
+    }
+
+    private void ApplyDifficulty()
+    {
+        if (DifficultyManager.Instance == null) return;
+        spawnInterval = DifficultyManager.Instance.SpawnInterval;
+        targetCustomerCount = DifficultyManager.Instance.TargetCustomerCount;
+    }
+
     private void Update()
     {
         if (GameManager.Instance != null && GameManager.Instance.CurrentState != GameState.CasinoFloor)

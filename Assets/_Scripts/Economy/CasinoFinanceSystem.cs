@@ -19,7 +19,10 @@ public class CasinoFinanceSystem : MonoBehaviour
 
     public void ApplyDailyExpenses()
     {
-        float totalExpense = dailyRent + dailySalary + dailyElectricity;
+        float expenseMultiplier = DifficultyManager.Instance != null
+            ? DifficultyManager.Instance.ExpenseMultiplier
+            : 1f;
+        float totalExpense = (dailyRent + dailySalary + dailyElectricity) * expenseMultiplier;
 
         if (EconomyManager.Instance == null)
         {
