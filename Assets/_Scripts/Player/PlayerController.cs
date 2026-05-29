@@ -35,8 +35,15 @@ public class PlayerController : MonoBehaviour
         if (moveDirection.magnitude > 1f)
             moveDirection.Normalize();
 
-        bool isSprinting = movementEnabled && Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
+        bool isSprinting = movementEnabled &&
+            Keyboard.current != null &&
+            Keyboard.current.leftShiftKey.isPressed &&
+            (StaminaManager.Instance == null || StaminaManager.Instance.CanSprint);
+
         float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
+
+        if (isSprinting && StaminaManager.Instance != null)
+            StaminaManager.Instance.DrainStamina(StaminaManager.Instance.SprintDrainPerSecond * Time.deltaTime);
 
         characterController.Move(moveDirection * currentSpeed * Time.deltaTime);
 

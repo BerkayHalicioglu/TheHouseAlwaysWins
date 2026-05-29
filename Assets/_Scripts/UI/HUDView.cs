@@ -11,6 +11,9 @@ public class HUDView : MonoBehaviour
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private Image dayProgressFill;
 
+    [Header("Stamina")]
+    [SerializeField] private Image staminaFill;
+
     public void UpdateBankroll(float amount)
     {
         if (bankrollText == null) return;
@@ -27,5 +30,11 @@ public class HUDView : MonoBehaviour
     {
         if (dayProgressFill == null) return;
         dayProgressFill.fillAmount = Mathf.Clamp01(progress);
+    }
+
+    public void UpdateStamina(float current, float max)
+    {
+        if (staminaFill == null) return;
+        staminaFill.fillAmount = Mathf.Clamp01(current / max);
     }
 }
