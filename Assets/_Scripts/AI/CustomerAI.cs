@@ -53,7 +53,10 @@ public class CustomerAI : MonoBehaviour, IInteractable
     }
 
     private void Start() {
-        IsCheater = Random.value < cheatChance;
+        float effectiveCheatChance = DifficultyManager.Instance != null
+            ? DifficultyManager.Instance.CheatChance
+            : cheatChance;
+        IsCheater = Random.value < effectiveCheatChance;
         willLookSuspicious = IsCheater || Random.value < falseSuspicionChance;
         CurrentState = CustomerState.Idle; // start state of npc (will change due its behaviour)
 
