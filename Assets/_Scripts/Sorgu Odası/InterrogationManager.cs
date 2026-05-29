@@ -5,32 +5,33 @@ public class InterrogationManager : MonoBehaviour
 {
     public static event Action OnSuspectPunished;
     public static event Action OnSuspectReleased;
-    public static event Action OnInterrogationComplete;
 
-    private CustomerAI currentSuspect;
-
-    public void SetSuspect(CustomerAI suspect)
+    private void Update()
     {
-        currentSuspect = suspect;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void PunishSuspect()
     {
-        currentSuspect?.SendToBackRoom();
+        Debug.Log("SÝSTEM: Oyuncu 'DÖV' kararýný verdi!");
+
         OnSuspectPunished?.Invoke();
+
         EndInterrogation();
     }
 
     public void ReleaseSuspect()
     {
-        currentSuspect?.ReleaseFromInterrogation();
+        Debug.Log("SÝSTEM: Oyuncu 'SERBEST BIRAK' kararýný verdi!");
+
         OnSuspectReleased?.Invoke();
+
         EndInterrogation();
     }
 
     private void EndInterrogation()
     {
-        currentSuspect = null;
-        OnInterrogationComplete?.Invoke();
+        gameObject.SetActive(false);
     }
 }

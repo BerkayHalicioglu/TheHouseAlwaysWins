@@ -6,28 +6,19 @@ public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance { get; private set; }
 
-    [Header("Fade")]
-    [SerializeField] private CanvasGroup fadeCanvasGroup;
-    [SerializeField] private float fadeDuration = 1f;
+    [Header("UI Ayarlarý")]
+    public CanvasGroup fadeCanvasGroup;
+    public float fadeDuration = 1f;
+    [Tooltip("Sorgu odasýna geçildiðinde açýlacak Döv/Serbest Býrak menüsü")]
+    public GameObject interrogationUI; 
 
-    [Header("Interrogation")]
-    [SerializeField] private GameObject interrogationUI;
-    [SerializeField] private InterrogationManager interrogationManager;
-    [SerializeField] private InterrogationView interrogationView;
+    [Header("Sorgu Odasý Iþýnlanma Noktalarý")]
+    public Transform playerInterrogationSpawn;
+    public Transform npcInterrogationSpawn;
 
-    [Header("Spawn Points")]
-    [SerializeField] private Transform playerInterrogationSpawn;
-    [SerializeField] private Transform npcInterrogationSpawn;
-
-    [Header("Scene References")]
-    [SerializeField] private GameObject player;
-    [SerializeField] private PlayerController playerController;
-    [SerializeField] private GameObject mainCamera;
-    [SerializeField] private GameObject interrogationCamera;
-
-    private CustomerAI currentSuspect;
-    private Vector3 playerReturnPosition;
-    private Quaternion playerReturnRotation;
+    [Header("Kamera Ayarlarý")]
+    public GameObject mainCamera;
+    public GameObject interrogationCamera;
 
     private void Awake()
     {
@@ -35,113 +26,50 @@ public class SceneTransitionManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    private void OnEnable()
+    public void StartTransitionToInterrogation(GameObject player, GameObject targetNPC)
     {
-        QTEManager.OnInterrogationQTESuccess += HandleQTESuccess;
-        InterrogationManager.OnInterrogationComplete += TransitionBackToCasino;
+        StartCoroutine(TransitionRoutine(player, targetNPC));
     }
 
-    private void OnDisable()
+    private IEnumerator TransitionRoutine(GameObject player, GameObject targetNPC)
     {
-        QTEManager.OnInterrogationQTESuccess -= HandleQTESuccess;
-        InterrogationManager.OnInterrogationComplete -= TransitionBackToCasino;
-    }
+        fadeCanvasGroup.blocksRaycasts = true;
 
-    private void HandleQTESuccess(CustomerAI suspect)
-    {
-        currentSuspect = suspect;
-        StartCoroutine(TransitionToBackRoomRoutine());
-    }
+        float timer = 0f;
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            fadeCanvasGroup.alpha = Mathf.Lerp(0f, 1f, timer / fadeDuration);
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 1f;
 
-    private IEnumerator TransitionToBackRoomRoutine()
-    {
-        SetPlayerMovement(false);
-        GameManager.Instance?.EnterBackRoom();
+        player.transform.position = playerInterrogationSpawn.position;
+        player.transform.rotation = playerInterrogationSpawn.rotation;
 
-        playerReturnPosition = player.transform.position;
-        playerReturnRotation = player.transform.rotation;
+        NavMeshAgent npcAgent = targetNPC.GetComponent<NavMeshAgent>();
+        if (npcAgent != null) npcAgent.enabled = false;
 
-        yield return StartCoroutine(Fade(0f, 1f));
+        targetNPC.transform.position = npcInterrogationSpawn.position;
+        targetNPC.transform.rotation = npcInterrogationSpawn.rotation;
 
-        MovePlayerTo(playerInterrogationSpawn.position, playerInterrogationSpawn.rotation);
-        MoveNPCTo(currentSuspect, npcInterrogationSpawn.position, npcInterrogationSpawn.rotation);
+        if (npcAgent != null) npcAgent.enabled = true;
 
         if (mainCamera != null) mainCamera.SetActive(false);
         if (interrogationCamera != null) interrogationCamera.SetActive(true);
 
         if (interrogationUI != null) interrogationUI.SetActive(true);
-        interrogationManager?.SetSuspect(currentSuspect);
-        interrogationView?.Show(currentSuspect);
 
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        yield return new WaitForSeconds(0.5f);
 
-        yield return StartCoroutine(Fade(1f, 0f));
-    }
-
-    public void TransitionBackToCasino()
-    {
-        StartCoroutine(TransitionBackRoutine());
-    }
-
-    private IEnumerator TransitionBackRoutine()
-    {
-        yield return StartCoroutine(Fade(0f, 1f));
-
-        if (interrogationUI != null) interrogationUI.SetActive(false);
-        if (interrogationCamera != null) interrogationCamera.SetActive(false);
-        if (mainCamera != null) mainCamera.SetActive(true);
-
-        MovePlayerTo(playerReturnPosition, playerReturnRotation);
-
-        if (currentSuspect != null)
+        timer = 0f;
+        while (timer < fadeDuration)
         {
-            Destroy(currentSuspect.gameObject);
-            currentSuspect = null;
-        }
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        GameManager.Instance?.ExitBackRoom();
-        SetPlayerMovement(true);
-
-        yield return StartCoroutine(Fade(1f, 0f));
-    }
-
-    private void MovePlayerTo(Vector3 position, Quaternion rotation)
-    {
-        CharacterController cc = player.GetComponent<CharacterController>();
-        if (cc != null) cc.enabled = false;
-        player.transform.SetPositionAndRotation(position, rotation);
-        if (cc != null) cc.enabled = true;
-    }
-
-    private void MoveNPCTo(CustomerAI npc, Vector3 position, Quaternion rotation)
-    {
-        NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
-        if (agent != null) agent.enabled = false;
-        npc.transform.SetPositionAndRotation(position, rotation);
-        if (agent != null) agent.enabled = true;
-    }
-
-    private IEnumerator Fade(float from, float to)
-    {
-        if (fadeCanvasGroup == null) yield break;
-        fadeCanvasGroup.blocksRaycasts = true;
-        float t = 0f;
-        while (t < fadeDuration)
-        {
-            t += Time.deltaTime;
-            fadeCanvasGroup.alpha = Mathf.Lerp(from, to, t / fadeDuration);
+            timer += Time.deltaTime;
+            fadeCanvasGroup.alpha = Mathf.Lerp(1f, 0f, timer / fadeDuration);
             yield return null;
         }
-        fadeCanvasGroup.alpha = to;
-        if (to == 0f) fadeCanvasGroup.blocksRaycasts = false;
-    }
-
-    private void SetPlayerMovement(bool enabled)
-    {
-        playerController?.SetMovementEnabled(enabled);
+        fadeCanvasGroup.alpha = 0f;
+        fadeCanvasGroup.blocksRaycasts = false;
     }
 }
