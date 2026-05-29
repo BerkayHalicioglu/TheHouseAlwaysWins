@@ -35,15 +35,14 @@ public class CustomerEconomyBridge : MonoBehaviour
 
     private void ResolveNpcEconomy()
     {
-        if (BetManager.Instance == null)
-        {
-            Debug.LogError("BetManager not found.");
-            return;
-        }
+        if (EconomyManager.Instance == null) return;
 
         float betAmount = Random.Range(minNpcBet, maxNpcBet);
-        BetResult result = Random.value < npcWinChance ? BetResult.Win : BetResult.Lose;
+        bool npcWins = Random.value < npcWinChance;
 
-        BetManager.Instance.ResolveNpcGame(betAmount, result);
+        if (npcWins)
+            EconomyManager.Instance.DeductMoney(betAmount);
+        else
+            EconomyManager.Instance.AddMoney(betAmount);
     }
 }

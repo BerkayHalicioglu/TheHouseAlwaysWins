@@ -25,6 +25,23 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "CasinoFloor")
+        {
+            hudView = Object.FindFirstObjectByType<HUDView>(FindObjectsInactive.Include);
+            interactionPromptView = Object.FindFirstObjectByType<InteractionPromptView>(FindObjectsInactive.Include);
+            qteView = Object.FindFirstObjectByType<QTEView>(FindObjectsInactive.Include);
+            dayEndReportView = Object.FindFirstObjectByType<DayEndReportView>(FindObjectsInactive.Include);
+            gameOverView = Object.FindFirstObjectByType<GameOverView>(FindObjectsInactive.Include);
+            feedbackView = Object.FindFirstObjectByType<FeedbackView>(FindObjectsInactive.Include);
+            interrogationView = Object.FindFirstObjectByType<InterrogationView>(FindObjectsInactive.Include);
+            pauseMenuView = Object.FindFirstObjectByType<PauseMenuView>(FindObjectsInactive.Include);
+            settingsView = Object.FindFirstObjectByType<SettingsView>(FindObjectsInactive.Include);
+            InitializeHUD();
+        }
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -149,8 +166,12 @@ public class UIManager : MonoBehaviour
 
     private void HandleCheaterCaught(float amount)
     {
-        if (feedbackView != null)
-            feedbackView.ShowCheaterCaught(amount);
+        if (feedbackView == null)
+        {
+            Debug.LogError("[UIManager] feedbackView null — FeedbackView sahnede bulunamadı.");
+            return;
+        }
+        feedbackView.ShowCheaterCaught(amount);
     }
 
     private void HandleInnocentSentToBackRoom(float amount)

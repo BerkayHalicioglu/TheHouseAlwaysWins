@@ -6,34 +6,59 @@ public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance { get; private set; }
 
-    [Header("UI Ayarlar�")]
+    [Header("UI Ayarları")]
     public CanvasGroup fadeCanvasGroup;
     public float fadeDuration = 1f;
-    [Tooltip("Sorgu odas�na ge�ildi�inde a��lacak D�v/Serbest B�rak men�s�")]
-    public GameObject interrogationUI; 
+    public GameObject interrogationUI;
 
-    [Header("Sorgu Odas� I��nlanma Noktalar�")]
+    [Header("Sorgu Odası Işınlanma Noktaları")]
     public Transform playerInterrogationSpawn;
     public Transform npcInterrogationSpawn;
 
-    [Header("Kamera Ayarlar�")]
+    [Header("Kamera Ayarları")]
     public GameObject mainCamera;
     public GameObject interrogationCamera;
+
+    [Header("Player")]
+    public PlayerController playerController;
+    public PlayerLook playerLook;
+    public GameObject playerObject;
+
+    private Vector3 playerReturnPosition;
+    private Quaternion playerReturnRotation;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        if (interrogationUI != null)
+            interrogationUI.SetActive(false);
     }
 
-    public void StartTransitionToInterrogation(GameObject player, GameObject targetNPC)
+    private void OnEnable()
     {
-        StartCoroutine(TransitionRoutine(player, targetNPC));
+        QTEManager.OnInterrogationQTESuccess += HandleInterrogationQTESuccess;
     }
 
-    private IEnumerator TransitionRoutine(GameObject player, GameObject targetNPC)
+    private void OnDisable()
+    {
+        QTEManager.OnInterrogationQTESuccess -= HandleInterrogationQTESuccess;
+    }
+
+    private void HandleInterrogationQTESuccess(CustomerAI target)
+    {
+        StartCoroutine(TransitionRoutine(target));
+    }
+
+    private IEnumerator TransitionRoutine(CustomerAI target)
     {
         fadeCanvasGroup.blocksRaycasts = true;
+
+        if (playerController != null)
+            playerController.SetMovementEnabled(false);
+        if (playerLook != null)
+            playerLook.SetLookEnabled(false);
 
         float timer = 0f;
         while (timer < fadeDuration)
@@ -44,21 +69,36 @@ public class SceneTransitionManager : MonoBehaviour
         }
         fadeCanvasGroup.alpha = 1f;
 
-        player.transform.position = playerInterrogationSpawn.position;
-        player.transform.rotation = playerInterrogationSpawn.rotation;
+        if (playerObject != null)
+        {
+            playerReturnPosition = playerObject.transform.position;
+            playerReturnRotation = playerObject.transform.rotation;
+            playerObject.transform.position = playerInterrogationSpawn.position;
+            playerObject.transform.rotation = playerInterrogationSpawn.rotation;
+        }
 
-        NavMeshAgent npcAgent = targetNPC.GetComponent<NavMeshAgent>();
+        NavMeshAgent npcAgent = target.GetComponent<NavMeshAgent>();
         if (npcAgent != null) npcAgent.enabled = false;
-
-        targetNPC.transform.position = npcInterrogationSpawn.position;
-        targetNPC.transform.rotation = npcInterrogationSpawn.rotation;
-
+        target.transform.position = npcInterrogationSpawn.position;
+        target.transform.rotation = npcInterrogationSpawn.rotation;
         if (npcAgent != null) npcAgent.enabled = true;
 
         if (mainCamera != null) mainCamera.SetActive(false);
         if (interrogationCamera != null) interrogationCamera.SetActive(true);
 
-        if (interrogationUI != null) interrogationUI.SetActive(true);
+        if (interrogationUI != null)
+            interrogationUI.SetActive(true);
+
+        InterrogationManager mgr = Object.FindFirstObjectByType<InterrogationManager>(FindObjectsInactive.Include);
+        if (mgr != null)
+        {
+            mgr.gameObject.SetActive(true);
+            mgr.SetTarget(target);
+        }
+        else
+        {
+            Debug.LogError("[SceneTransitionManager] InterrogationManager sahnede bulunamadı.");
+        }
 
         yield return new WaitForSeconds(0.5f);
 
@@ -71,5 +111,59 @@ public class SceneTransitionManager : MonoBehaviour
         }
         fadeCanvasGroup.alpha = 0f;
         fadeCanvasGroup.blocksRaycasts = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void ReturnToCasino(System.Action onComplete = null)
+    {
+        StartCoroutine(ReturnRoutine(onComplete));
+    }
+
+    private IEnumerator ReturnRoutine(System.Action onComplete = null)
+    {
+        fadeCanvasGroup.blocksRaycasts = true;
+
+        float timer = 0f;
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            fadeCanvasGroup.alpha = Mathf.Lerp(0f, 1f, timer / fadeDuration);
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 1f;
+
+        if (interrogationUI != null) interrogationUI.SetActive(false);
+        if (interrogationCamera != null) interrogationCamera.SetActive(false);
+        if (mainCamera != null) mainCamera.SetActive(true);
+
+        if (playerObject != null)
+        {
+            playerObject.transform.position = playerReturnPosition;
+            playerObject.transform.rotation = playerReturnRotation;
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        if (playerController != null)
+            playerController.SetMovementEnabled(true);
+        if (playerLook != null)
+            playerLook.SetLookEnabled(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        timer = 0f;
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            fadeCanvasGroup.alpha = Mathf.Lerp(1f, 0f, timer / fadeDuration);
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 0f;
+        fadeCanvasGroup.blocksRaycasts = false;
+
+        onComplete?.Invoke();
     }
 }

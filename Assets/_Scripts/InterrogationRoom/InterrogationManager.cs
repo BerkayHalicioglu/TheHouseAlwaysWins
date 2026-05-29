@@ -6,32 +6,39 @@ public class InterrogationManager : MonoBehaviour
     public static event Action OnSuspectPunished;
     public static event Action OnSuspectReleased;
 
-    private void Update()
+    private CustomerAI currentTarget;
+
+    private void OnEnable()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
+    public void SetTarget(CustomerAI target)
+    {
+        currentTarget = target;
+    }
+
     public void PunishSuspect()
     {
-        Debug.Log("SÝSTEM: Oyuncu 'DÖV' kararýný verdi!");
-
+        CustomerAI target = currentTarget;
         OnSuspectPunished?.Invoke();
-
-        EndInterrogation();
+        EndInterrogation(() => target?.SendToBackRoom());
     }
 
     public void ReleaseSuspect()
     {
-        Debug.Log("SÝSTEM: Oyuncu 'SERBEST BIRAK' kararýný verdi!");
-
+        CustomerAI target = currentTarget;
         OnSuspectReleased?.Invoke();
-
-        EndInterrogation();
+        EndInterrogation(() => target?.ReleaseFromInterrogation());
     }
 
-    private void EndInterrogation()
+    private void EndInterrogation(Action onReturnComplete)
     {
-        gameObject.SetActive(false);
+        currentTarget = null;
+        if (SceneTransitionManager.Instance != null)
+            SceneTransitionManager.Instance.ReturnToCasino(onReturnComplete);
+        else
+            Debug.LogError("[InterrogationManager] SceneTransitionManager.Instance is null.");
     }
 }

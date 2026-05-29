@@ -284,13 +284,17 @@ public class CustomerAI : MonoBehaviour, IInteractable
             agent.isStopped = false;
         }
 
-        if (CustomerDestinationManager.Instance.ExitPoint != null)
+        if (CustomerDestinationManager.Instance == null || CustomerDestinationManager.Instance.ExitPoint == null)
         {
-            if (!SetDestinationOnNavMesh(CustomerDestinationManager.Instance.ExitPoint.position))
-            {
-                CurrentState = CustomerState.Gone;
-                Destroy(gameObject);
-            }
+            CurrentState = CustomerState.Gone;
+            Destroy(gameObject);
+            return;
+        }
+
+        if (!SetDestinationOnNavMesh(CustomerDestinationManager.Instance.ExitPoint.position))
+        {
+            CurrentState = CustomerState.Gone;
+            Destroy(gameObject);
         }
     }
 

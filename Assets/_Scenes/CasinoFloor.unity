@@ -2449,11 +2449,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionManager
   fadeCanvasGroup: {fileID: 1627645219}
   fadeDuration: 1
-  interrogationUI: {fileID: 1442867971}
+  interrogationUI: {fileID: 849124260}
   playerInterrogationSpawn: {fileID: 1329730147}
   npcInterrogationSpawn: {fileID: 1327867197}
-  mainCamera: {fileID: 0}
-  interrogationCamera: {fileID: 0}
+  mainCamera: {fileID: 1434078694}
+  interrogationCamera: {fileID: 727415646}
+  playerController: {fileID: 1758920411}
+  playerLook: {fileID: 1758920410}
+  playerObject: {fileID: 1758920408}
 --- !u!4 &167243521
 Transform:
   m_ObjectHideFlags: 0
@@ -3719,6 +3722,7 @@ GameObject:
   - component: {fileID: 263369949}
   - component: {fileID: 263369948}
   - component: {fileID: 263369950}
+  - component: {fileID: 263369951}
   m_Layer: 5
   m_Name: FeedbackPanel
   m_TagString: Untagged
@@ -3738,7 +3742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f6fa12993204ee4bc9fb915900a03d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FeedbackView
-  feedbackPanel: {fileID: 263369947}
+  canvasGroup: {fileID: 263369951}
   titleText: {fileID: 1840251959}
   amountText: {fileID: 897771126}
   audioSource: {fileID: 0}
@@ -3864,6 +3868,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &263369951
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263369947}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &263595256 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3927918558419263796, guid: b5efb856623b59c4da56e8856f2c3d10, type: 3}
@@ -15169,7 +15185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &849124261
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15204,10 +15220,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98102b821fbc0754da52fdc3bc9c719c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InterrogationView
-  panel: {fileID: 849124260}
   guiltyButton: {fileID: 762944692}
   innocentButton: {fileID: 1480924492}
   headerText: {fileID: 1111712237}
+  interrogationManager: {fileID: 1125712652}
 --- !u!114 &849124263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15724,7 +15740,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: +$500
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -37127,7 +37143,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: CHEATER CAUGHT!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

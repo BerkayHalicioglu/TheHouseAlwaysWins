@@ -14,6 +14,10 @@ public class InterrogationView : MonoBehaviour
 
     private void Awake()
     {
+        if (interrogationManager == null)
+            interrogationManager = GetComponentInParent<InterrogationManager>(true)
+                                ?? FindObjectOfType<InterrogationManager>(true);
+
         guiltyButton?.onClick.AddListener(OnGuiltyPressed);
         innocentButton?.onClick.AddListener(OnInnocentPressed);
     }
