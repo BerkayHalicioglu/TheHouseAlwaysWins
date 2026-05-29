@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2810008050268019143}
   - component: {fileID: 5676873637344735990}
   - component: {fileID: 375009199053392858}
+  - component: {fileID: 6312114043996054111}
   m_Layer: 0
   m_Name: krupiyer
   m_TagString: Untagged
@@ -130,6 +131,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CroupierReaction
   reactionText: {fileID: 1467978908213601176}
+--- !u!114 &6312114043996054111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4836038899288979254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d568bffb6ca8e747836d4eb1ce63f88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Humanizer
 --- !u!1 &8897246557423322131
 GameObject:
   m_ObjectHideFlags: 0
