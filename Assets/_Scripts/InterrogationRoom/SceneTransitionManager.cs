@@ -6,17 +6,17 @@ public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance { get; private set; }
 
-    [Header("UI Ayarlarý")]
+    [Header("UI Ayarlarï¿½")]
     public CanvasGroup fadeCanvasGroup;
     public float fadeDuration = 1f;
-    [Tooltip("Sorgu odasýna geçildiðinde açýlacak Döv/Serbest Býrak menüsü")]
+    [Tooltip("Sorgu odasï¿½na geï¿½ildiï¿½inde aï¿½ï¿½lacak Dï¿½v/Serbest Bï¿½rak menï¿½sï¿½")]
     public GameObject interrogationUI; 
 
-    [Header("Sorgu Odasý Iþýnlanma Noktalarý")]
+    [Header("Sorgu Odasï¿½ Iï¿½ï¿½nlanma Noktalarï¿½")]
     public Transform playerInterrogationSpawn;
     public Transform npcInterrogationSpawn;
 
-    [Header("Kamera Ayarlarý")]
+    [Header("Kamera Ayarlarï¿½")]
     public GameObject mainCamera;
     public GameObject interrogationCamera;
 
