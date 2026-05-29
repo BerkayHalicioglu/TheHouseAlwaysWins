@@ -49,4 +49,9 @@ public class PlayerLook : MonoBehaviour
     {
         mouseSensitivity = value;
     }
+
+    public void SetLookEnabled(bool enabled)
+    {
+        this.enabled = enabled;
+    }
 }

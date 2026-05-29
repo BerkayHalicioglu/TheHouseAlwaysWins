@@ -5,56 +5,36 @@ using TMPro;
 public class InterrogationView : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private GameObject panel;
     [SerializeField] private Button guiltyButton;
     [SerializeField] private Button innocentButton;
     [SerializeField] private TMP_Text headerText;
 
-    private CustomerAI currentTarget;
+    [Header("References")]
+    [SerializeField] private InterrogationManager interrogationManager;
 
     private void Awake()
     {
-        gameObject.SetActive(false);
+        if (interrogationManager == null)
+            interrogationManager = GetComponentInParent<InterrogationManager>(true)
+                                ?? FindObjectOfType<InterrogationManager>(true);
+
         guiltyButton?.onClick.AddListener(OnGuiltyPressed);
         innocentButton?.onClick.AddListener(OnInnocentPressed);
-        QTEManager.OnInterrogationQTESuccess += Show;
     }
 
-    private void OnDestroy()
+    public void Show(CustomerAI target)
     {
-        QTEManager.OnInterrogationQTESuccess -= Show;
-    }
-
-    private void Show(CustomerAI target)
-    {
-        currentTarget = target;
-
         if (headerText != null)
             headerText.text = "SUSPECT DETAINED\nGuilty or Innocent?";
-
-        gameObject.SetActive(true);
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    private void Hide()
-    {
-        currentTarget = null;
-        gameObject.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void OnGuiltyPressed()
     {
-        currentTarget?.SendToBackRoom();
-        Hide();
+        interrogationManager?.PunishSuspect();
     }
 
     private void OnInnocentPressed()
     {
-        currentTarget?.ReleaseFromInterrogation();
-        Hide();
+        interrogationManager?.ReleaseSuspect();
     }
 }

@@ -1,12 +1,11 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class FeedbackView : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private GameObject feedbackPanel;
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text amountText;
 
@@ -20,123 +19,43 @@ public class FeedbackView : MonoBehaviour
 
     private void Awake()
     {
-        if (feedbackPanel != null)
-            feedbackPanel.SetActive(false);
+        if (canvasGroup == null)
+            canvasGroup = GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
+
+        canvasGroup.alpha = 0f;
+        canvasGroup.blocksRaycasts = false;
     }
 
-    public void ShowCheaterCaught(float amount)
+    public void ShowCheaterCaught(float amount)    => Show("CHEATER CAUGHT!",    $"+${amount:N0}",               Color.green,                successSound);
+    public void ShowInnocentCompensation(float amount) => Show("THEY WERE INNOCENT!", $"-${amount:N0} Compensation", Color.red,                  errorSound);
+    public void ShowCorrectRelease(float amount)   => Show("CORRECT CALL!",      $"+${amount:N0}",               Color.green,                successSound);
+    public void ShowCheaterMissed(float amount)    => Show("CHEATER ESCAPED!",   $"-${amount:N0}",               new Color(1f, 0.5f, 0f),    errorSound);
+    public void ShowWrongAccusation(float amount)  => Show("WRONG ACCUSATION!",  $"-${amount:N0}",               Color.red,                  errorSound);
+
+    private void Show(string title, string amount, Color color, AudioClip clip)
     {
-        if (titleText != null)
-        {
-            titleText.text = "CHEATER CAUGHT!";
-            titleText.color = Color.green;
-        }
+        if (titleText != null)  { titleText.text  = title;  titleText.color  = color; }
+        if (amountText != null) { amountText.text = amount; amountText.color = color; }
 
-        if (amountText != null)
-        {
-            amountText.text = $"+${amount:N0}";
-            amountText.color = Color.green;
-        }
+        PlaySound(clip);
 
-        PlaySound(successSound);
-        Show();
-    }
-
-    public void ShowWrongAccusation(float amount)
-    {
-        if (titleText != null)
-        {
-            titleText.text = "WRONG ACCUSATION!";
-            titleText.color = Color.red;
-        }
-
-        if (amountText != null)
-        {
-            amountText.text = $"-${amount:N0}";
-            amountText.color = Color.red;
-        }
-
-        PlaySound(errorSound);
-        Show();
-    }
-
-    public void ShowInnocentCompensation(float amount)
-    {
-        if (titleText != null)
-        {
-            titleText.text = "THEY WERE INNOCENT!";
-            titleText.color = Color.red;
-        }
-
-        if (amountText != null)
-        {
-            amountText.text = $"-${amount:N0} Compensation";
-            amountText.color = Color.red;
-        }
-
-        PlaySound(errorSound);
-        Show();
-    }
-
-    public void ShowCorrectRelease(float amount)
-    {
-        if (titleText != null)
-        {
-            titleText.text = "CORRECT CALL!";
-            titleText.color = Color.green;
-        }
-
-        if (amountText != null)
-        {
-            amountText.text = $"+${amount:N0}";
-            amountText.color = Color.green;
-        }
-
-        PlaySound(successSound);
-        Show();
-    }
-
-    public void ShowCheaterMissed(float amount)
-    {
-        Color orange = new Color(1f, 0.5f, 0f);
-
-        if (titleText != null)
-        {
-            titleText.text = "CHEATER ESCAPED!";
-            titleText.color = orange;
-        }
-
-        if (amountText != null)
-        {
-            amountText.text = $"-${amount:N0}";
-            amountText.color = orange;
-        }
-
-        PlaySound(errorSound);
-        Show();
-    }
-
-    private void Show()
-    {
         StopAllCoroutines();
-
-        if (feedbackPanel != null)
-            feedbackPanel.SetActive(true);
-
-        StartCoroutine(HideAfterDelay());
+        StartCoroutine(ShowRoutine());
     }
 
-    private IEnumerator HideAfterDelay()
+    private IEnumerator ShowRoutine()
     {
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = false;
+
         yield return new WaitForSeconds(displayDuration);
 
-        if (feedbackPanel != null)
-            feedbackPanel.SetActive(false);
+        canvasGroup.alpha = 0f;
     }
 
     private void PlaySound(AudioClip clip)
     {
-        if (audioSource == null || clip == null) return;
-        audioSource.PlayOneShot(clip);
+        if (audioSource != null && clip != null)
+            audioSource.PlayOneShot(clip);
     }
 }
