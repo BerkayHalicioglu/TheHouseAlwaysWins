@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         EconomyManager.OnBankrollChanged += HandleBankrollChanged;
+        StaminaManager.OnStaminaChanged += HandleStaminaChanged;
         GameManager.OnDayStarted += HandleDayStarted;
         GameManager.OnDayEnded += HandleDayEnded;
         GameManager.OnGameOver += HandleGameOver;
@@ -61,6 +62,7 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         EconomyManager.OnBankrollChanged -= HandleBankrollChanged;
+        StaminaManager.OnStaminaChanged -= HandleStaminaChanged;
         GameManager.OnDayStarted -= HandleDayStarted;
         GameManager.OnDayEnded -= HandleDayEnded;
         GameManager.OnGameOver -= HandleGameOver;
@@ -100,6 +102,9 @@ public class UIManager : MonoBehaviour
             hudView.UpdateDay(GameManager.Instance.CurrentDay);
 
         hudView.UpdateDayProgress(0f);
+
+        if (StaminaManager.Instance != null)
+            hudView.UpdateStamina(StaminaManager.Instance.CurrentStamina, StaminaManager.Instance.MaxStamina);
     }
 
     private void Update()
@@ -125,6 +130,12 @@ public class UIManager : MonoBehaviour
     {
         if (hudView != null)
             hudView.UpdateBankroll(newAmount);
+    }
+
+    private void HandleStaminaChanged(float current, float max)
+    {
+        if (hudView != null)
+            hudView.UpdateStamina(current, max);
     }
 
     private void HandleDayStarted()

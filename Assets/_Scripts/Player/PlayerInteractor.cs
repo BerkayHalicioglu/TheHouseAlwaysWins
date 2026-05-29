@@ -210,7 +210,7 @@ public class PlayerInteractor : MonoBehaviour
 
             if (interactable != null)
 
-                newPrompt = "Press E to Interrogate";
+                newPrompt = interactable.InteractionPrompt;
 
         }
 

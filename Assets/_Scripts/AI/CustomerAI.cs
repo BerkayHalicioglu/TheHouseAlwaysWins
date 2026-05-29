@@ -415,6 +415,8 @@ public class CustomerAI : MonoBehaviour, IInteractable
             indicator.Show();
         }
       }
+      public string InteractionPrompt => "Press E to Interrogate";
+
       public void Interact()
       {
         StartInterrogation(); // interrogation start (yeşim bunu sen kullanacaksın)

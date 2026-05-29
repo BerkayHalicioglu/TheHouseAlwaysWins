@@ -4,6 +4,8 @@ public class SuspiciousTarget : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject suspicionIndicator;
 
+    public string InteractionPrompt => "Press E to Interrogate";
+
     public void Interact()
     {
         if (suspicionIndicator == null)
