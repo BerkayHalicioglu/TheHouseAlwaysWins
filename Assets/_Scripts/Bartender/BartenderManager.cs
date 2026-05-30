@@ -8,16 +8,24 @@ public class BartenderManager : MonoBehaviour
 {
     public static BartenderManager Instance;
 
+    [Header("Barmen Görsel ve Animasyon")]
+    public Animator bartenderAnimator;
+
     [Header("Arayüz ve Efektler")]
     public GameObject lowStaminaNotification;
     public Volume globalVolume;
     public Image staminaFillBar;
 
     [Header("Yorgunluk (Körlük) Ayarlarý")]
-    [Tooltip("Stamina 0 olunca görüþün daralacaðý maksimum seviye (0.9 ortada sadece ufacýk bir delik býrakýr)")]
     public float maxBlindness = 0.9f;
-    [Tooltip("Görüþün daralma hýzý (Ne kadar yüksekse o kadar hýzlý kararýr)")]
     public float blindnessSpeed = 0.05f;
+
+    [Header("Ses Efektleri (Audio)")]
+    public AudioSource heartbeatSound;
+    public AudioSource breathingSound;
+    public AudioSource environmentSound;
+
+    private float originalEnvVolume = 1f;
 
     private Vignette vignette;
     private Color originalBarColor;
@@ -35,11 +43,12 @@ public class BartenderManager : MonoBehaviour
         if (globalVolume != null && globalVolume.profile.TryGet(out Vignette v))
             vignette = v;
 
-        if (lowStaminaNotification != null)
-            lowStaminaNotification.SetActive(false);
+        if (lowStaminaNotification != null) lowStaminaNotification.SetActive(false);
+        if (staminaFillBar != null) originalBarColor = staminaFillBar.color;
 
-        if (staminaFillBar != null)
-            originalBarColor = staminaFillBar.color;
+        if (environmentSound != null) originalEnvVolume = environmentSound.volume;
+        if (heartbeatSound != null) heartbeatSound.volume = 0f;
+        if (breathingSound != null) breathingSound.volume = 0f;
     }
 
     private void OnEnable()
@@ -58,9 +67,23 @@ public class BartenderManager : MonoBehaviour
 
         if (StaminaManager.Instance.CurrentStamina <= 0f)
         {
+            if (heartbeatSound != null && !heartbeatSound.isPlaying)
+            {
+                heartbeatSound.volume = 1f;
+                heartbeatSound.Play();
+            }
+            if (breathingSound != null && !breathingSound.isPlaying)
+            {
+                breathingSound.volume = 1f;
+                breathingSound.Play();
+            }
+
             if (vignette != null && vignette.intensity.value < maxBlindness)
             {
                 vignette.intensity.value += blindnessSpeed * Time.deltaTime;
+
+                if (environmentSound != null)
+                    environmentSound.volume = Mathf.Lerp(originalEnvVolume, originalEnvVolume * 0.2f, vignette.intensity.value / maxBlindness);
             }
         }
     }
@@ -92,6 +115,12 @@ public class BartenderManager : MonoBehaviour
         if (isDrinking || StaminaManager.Instance.CurrentStamina >= StaminaManager.Instance.MaxStamina)
             return;
 
+        // Animasyonu tetikle
+        if (bartenderAnimator != null)
+        {
+            bartenderAnimator.SetTrigger("IckiHazirla");
+        }
+
         StartCoroutine(RefillStaminaOverTime());
     }
 
@@ -105,13 +134,14 @@ public class BartenderManager : MonoBehaviour
         float elapsed = 0f;
         float startStamina = StaminaManager.Instance.CurrentStamina;
         float targetStamina = StaminaManager.Instance.MaxStamina;
-
         float startVignette = vignette != null ? vignette.intensity.value : 0f;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float newStamina = Mathf.Lerp(startStamina, targetStamina, elapsed / duration);
+            float progress = elapsed / duration;
+
+            float newStamina = Mathf.Lerp(startStamina, targetStamina, progress);
             float amountToAdd = newStamina - StaminaManager.Instance.CurrentStamina;
 
             if (amountToAdd > 0)
@@ -121,7 +151,10 @@ public class BartenderManager : MonoBehaviour
 
             if (vignette != null)
             {
-                vignette.intensity.value = Mathf.Lerp(startVignette, 0f, elapsed / duration);
+                vignette.intensity.value = Mathf.Lerp(startVignette, 0f, progress);
+
+                if (environmentSound != null)
+                    environmentSound.volume = Mathf.Lerp(originalEnvVolume * 0.2f, originalEnvVolume, progress);
             }
 
             yield return null;
@@ -131,6 +164,11 @@ public class BartenderManager : MonoBehaviour
 
         if (vignette != null) vignette.intensity.value = 0f;
         if (staminaFillBar != null) staminaFillBar.color = originalBarColor;
+
+        if (environmentSound != null) environmentSound.volume = originalEnvVolume;
+
+        if (heartbeatSound != null) heartbeatSound.Stop();
+        if (breathingSound != null) breathingSound.Stop();
 
         isDrinking = false;
     }
