@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
@@ -18,9 +19,11 @@ public class QTEView : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float resultDisplayDuration = 1.2f;
 
+    private Key[] sequence;
+    private int   currentStep;
     private float timeLimit;
     private float timeRemaining;
-    private bool isActive;
+    private bool  isActive;
 
     private void Awake()
     {
@@ -30,16 +33,18 @@ public class QTEView : MonoBehaviour
 
     private void OnEnable()
     {
-        QTEManager.OnQTEStarted += HandleQTEStarted;
-        QTEManager.OnQTESuccess += HandleQTESuccess;
-        QTEManager.OnQTEFailed += HandleQTEFailed;
+        QTEManager.OnQTEStarted      += HandleQTEStarted;
+        QTEManager.OnQTEStepAdvanced += HandleQTEStepAdvanced;
+        QTEManager.OnQTESuccess      += HandleQTESuccess;
+        QTEManager.OnQTEFailed       += HandleQTEFailed;
     }
 
     private void OnDisable()
     {
-        QTEManager.OnQTEStarted -= HandleQTEStarted;
-        QTEManager.OnQTESuccess -= HandleQTESuccess;
-        QTEManager.OnQTEFailed -= HandleQTEFailed;
+        QTEManager.OnQTEStarted      -= HandleQTEStarted;
+        QTEManager.OnQTEStepAdvanced -= HandleQTEStepAdvanced;
+        QTEManager.OnQTESuccess      -= HandleQTESuccess;
+        QTEManager.OnQTEFailed       -= HandleQTEFailed;
     }
 
     private void Update()
@@ -47,28 +52,33 @@ public class QTEView : MonoBehaviour
         if (!isActive) return;
 
         timeRemaining -= Time.deltaTime;
-        timeRemaining = Mathf.Max(timeRemaining, 0f);
+        timeRemaining  = Mathf.Max(timeRemaining, 0f);
 
         if (timerFill != null)
             timerFill.fillAmount = timeRemaining / timeLimit;
     }
 
-    private void HandleQTEStarted(Key key, float duration)
+    private void HandleQTEStarted(Key[] seq, float duration)
     {
         StopAllCoroutines();
 
-        timeLimit = duration;
+        sequence      = seq;
+        currentStep   = 0;
+        timeLimit     = duration;
         timeRemaining = duration;
-        isActive = true;
+        isActive      = true;
 
-        if (keyPromptText != null)
-            keyPromptText.text = $"Press  {key.ToString().ToUpper()}";
-
-        if (timerFill != null)
-            timerFill.fillAmount = 1f;
-
+        if (timerFill != null)  timerFill.fillAmount = 1f;
         if (resultPanel != null) resultPanel.SetActive(false);
         if (promptPanel != null) promptPanel.SetActive(true);
+
+        RefreshKeyDisplay();
+    }
+
+    private void HandleQTEStepAdvanced(int step)
+    {
+        currentStep = step;
+        RefreshKeyDisplay();
     }
 
     private void HandleQTESuccess()
@@ -85,11 +95,31 @@ public class QTEView : MonoBehaviour
         ShowResult("FAILED!", Color.red);
     }
 
+    // Builds e.g. "✓  [ J ]  K" — done / current / upcoming
+    private void RefreshKeyDisplay()
+    {
+        if (keyPromptText == null || sequence == null) return;
+
+        var sb = new StringBuilder();
+        for (int i = 0; i < sequence.Length; i++)
+        {
+            if (i > 0) sb.Append("   ");
+
+            if (i < currentStep)
+                sb.Append("✓");
+            else if (i == currentStep)
+                sb.Append($"[ {sequence[i]} ]");
+            else
+                sb.Append(sequence[i].ToString());
+        }
+        keyPromptText.text = sb.ToString();
+    }
+
     private void ShowResult(string message, Color color)
     {
         if (resultText != null)
         {
-            resultText.text = message;
+            resultText.text  = message;
             resultText.color = color;
         }
 

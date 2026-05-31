@@ -7,6 +7,7 @@ public class EconomyManager : MonoBehaviour
     [Header("Bankroll")]
     [SerializeField] private float startingBankroll = 5000f;
     public float CurrentBankroll { get; private set; }
+    public float StartingBankroll => startingBankroll;
 
     public static event System.Action<float> OnBankrollChanged;
 
@@ -20,6 +21,12 @@ public class EconomyManager : MonoBehaviour
     private void Start()
     {
         CurrentBankroll = startingBankroll;
+        OnBankrollChanged?.Invoke(CurrentBankroll);
+    }
+
+    public void Initialize(float bankroll)
+    {
+        CurrentBankroll = bankroll;
         OnBankrollChanged?.Invoke(CurrentBankroll);
     }
 
