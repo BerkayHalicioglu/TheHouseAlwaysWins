@@ -2525,7 +2525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdfdae6b78a947da9dfaa5966a5fb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QTEManager
-  qteTimeLimit: 3
+  fallbackTimePerKey: 3
   playerController: {fileID: 1758920411}
 --- !u!1 &155480393 stripped
 GameObject:
@@ -7638,6 +7638,8 @@ MonoBehaviour:
   customerPrefab: {fileID: -5640715809288206694, guid: d966f4d08edabc94db2130b83b7e1671, type: 3}
   spawnPoint: {fileID: 1784391603}
   targetCustomerCount: 100
+  minimumCustomerCount: 18
+  maxSpawnPerTick: 3
   spawnInterval: 4
   navMeshSearchDistance: 5
 --- !u!4 &392911596
@@ -17334,7 +17336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.8627451}
+  m_Color: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0.8627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -37156,6 +37158,10 @@ MonoBehaviour:
   falseSuspicionChanceDayCap: 0.25
   expenseMultiplierDay1: 1
   expenseMultiplierDayCap: 2
+  qteSequenceLengthDay1: 4
+  qteSequenceLengthDayCap: 8
+  qteTimePerKeyDay1: 3
+  qteTimePerKeyDayCap: 1
 --- !u!4 &1669708900
 Transform:
   m_ObjectHideFlags: 0
