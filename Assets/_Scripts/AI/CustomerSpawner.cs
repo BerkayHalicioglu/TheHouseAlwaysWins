@@ -89,6 +89,9 @@ public class CustomerSpawner : MonoBehaviour
             spawnPosition = hit.position;
         }
 
-        Instantiate(customerPrefab, spawnPosition, spawnPoint.rotation);
+        if (CustomerPool.Instance != null)
+            CustomerPool.Instance.Get(spawnPosition, spawnPoint.rotation);
+        else
+            Instantiate(customerPrefab, spawnPosition, spawnPoint.rotation);
     }
 }

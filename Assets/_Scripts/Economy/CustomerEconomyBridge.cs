@@ -15,7 +15,13 @@ public class CustomerEconomyBridge : MonoBehaviour
     private void Awake()
     {
         customerAI = GetComponent<CustomerAI>();
-        previousState = customerAI.CurrentState;
+    }
+
+    // Pool'dan geri alındığında (SetActive true) state sıfırlanır
+    private void OnEnable()
+    {
+        previousState = CustomerState.Idle;
+        gameResolved  = false;
     }
 
     private void Update()
@@ -38,11 +44,12 @@ public class CustomerEconomyBridge : MonoBehaviour
         if (EconomyManager.Instance == null) return;
 
         float betAmount = Random.Range(minNpcBet, maxNpcBet);
-        bool npcWins = Random.value < npcWinChance;
 
-        if (npcWins)
-            EconomyManager.Instance.DeductMoney(betAmount);
-        else
-            EconomyManager.Instance.AddMoney(betAmount);
+        // Decorator pattern: hileci müşteri StandardResolver'ın üzerine ek kazanma katmanı ekler
+        IEconomyResolver resolver = new StandardEconomyResolver(npcWinChance);
+        if (customerAI.IsCheater)
+            resolver = new CheaterEconomyDecorator(resolver);
+
+        resolver.Resolve(betAmount);
     }
 }

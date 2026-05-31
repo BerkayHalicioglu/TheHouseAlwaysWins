@@ -56,26 +56,46 @@ public class CustomerAI : MonoBehaviour, IInteractable
         agent = GetComponent<NavMeshAgent>(); // navmesh is a must for npc to make it walk
     }
 
-    private void Start() {
-        float effectiveCheatChance = DifficultyManager.Instance != null
-            ? DifficultyManager.Instance.CheatChance
-            : cheatChance;
-        float effectiveFalseSuspicion = DifficultyManager.Instance != null
-            ? DifficultyManager.Instance.FalseSuspicionChance
-            : falseSuspicionChance;
+    private void Start()
+    {
+        Initialize(transform.position, transform.rotation);
+    }
 
-        IsCheater = Random.value < effectiveCheatChance;
+    // Pool tarafından her Get() sonrası çağrılır; ilk spawn'da Start() üzerinden tetiklenir.
+    public void Initialize(Vector3 position, Quaternion rotation)
+    {
+        // State sıfırla
+        CanBeInteractedWith  = true;
+        CurrentState         = CustomerState.Idle;
+        playTimer            = 0f;
+        cheatTimer           = 0f;
+        activityTimer        = 0f;
+        activitiesCompleted  = 0;
+        currentTable         = null;
+        currentSlotMachine   = null;
+        currentRouletteTable = null;
+        currentBarTable      = null;
+        currentSeat          = null;
+
+        // Suspicion göstergesini gizle (pool'dan dönen nesne için)
+        SuspicionIndicator indicator = GetComponentInChildren<SuspicionIndicator>(true);
+        if (indicator != null) indicator.Hide();
+
+        // Yeniden rastgele hileci ataması
+        float effectiveCheatChance = DifficultyManager.Instance != null
+            ? DifficultyManager.Instance.CheatChance : cheatChance;
+        float effectiveFalseSuspicion = DifficultyManager.Instance != null
+            ? DifficultyManager.Instance.FalseSuspicionChance : falseSuspicionChance;
+
+        IsCheater          = Random.value < effectiveCheatChance;
         willLookSuspicious = IsCheater || Random.value < effectiveFalseSuspicion;
-        Debug.Log($"{name} spawned. Cheater: {IsCheater}, WillLookSuspicious: {willLookSuspicious}, CheatChance: {effectiveCheatChance}, FalseSuspicionChance: {effectiveFalseSuspicion}");
-        CurrentState = CustomerState.Idle; // start state of npc (will change due its behaviour)
+        Debug.Log($"{name} spawned. Cheater: {IsCheater}, WillLookSuspicious: {willLookSuspicious}");
 
         activitiesBeforeLeaving = Random.Range(minActivitiesBeforeLeaving, maxActivitiesBeforeLeaving + 1);
-        activitiesCompleted = 0;
 
-        if (!TryPlaceOnNavMesh())
-        {
-            return;
-        }
+        transform.SetPositionAndRotation(position, rotation);
+
+        if (!TryPlaceOnNavMesh()) return;
 
         ChooseActivity();
         GoToSelectedActivity();
@@ -303,14 +323,14 @@ public class CustomerAI : MonoBehaviour, IInteractable
         if (CustomerDestinationManager.Instance == null || CustomerDestinationManager.Instance.ExitPoint == null)
         {
             CurrentState = CustomerState.Gone;
-            Destroy(gameObject);
+            ReturnToPool();
             return;
         }
 
         if (!SetDestinationOnNavMesh(CustomerDestinationManager.Instance.ExitPoint.position))
         {
             CurrentState = CustomerState.Gone;
-            Destroy(gameObject);
+            ReturnToPool();
         }
     }
 
@@ -345,11 +365,19 @@ public class CustomerAI : MonoBehaviour, IInteractable
 
     private void UpdateLeaving() // checks that is npc reached exit
       {
-          if (HasReachedDestination()) // if yes npc deleted from scene
+          if (HasReachedDestination())
           {
               CurrentState = CustomerState.Gone;
-              Destroy(gameObject);
+              ReturnToPool();
           }
+      }
+
+      private void ReturnToPool()
+      {
+          if (CustomerPool.Instance != null)
+              CustomerPool.Instance.Return(this);
+          else
+              Destroy(gameObject);
       }
 
       private bool HasReachedDestination() // if nacmesh still calculating distance the npc not yet left
