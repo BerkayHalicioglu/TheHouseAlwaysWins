@@ -6,6 +6,8 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private CustomerAI customerPrefab;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private int targetCustomerCount = 24;
+    [SerializeField] private int minimumCustomerCount = 18;
+    [SerializeField] private int maxSpawnPerTick = 3;
     [SerializeField] private float spawnInterval = 2f;
     [SerializeField] private float navMeshSearchDistance = 5f;
 
@@ -44,8 +46,24 @@ public class CustomerSpawner : MonoBehaviour
 
         spawnTimer = 0f;
 
-        if (CountCustomers() >= targetCustomerCount)
+        int currentCustomerCount = CountCustomers();
+
+        if (currentCustomerCount >= targetCustomerCount)
         {
+            return;
+        }
+
+        int missingCustomerCount = targetCustomerCount - currentCustomerCount;
+
+        if (currentCustomerCount < minimumCustomerCount)
+        {
+            int spawnCount = Mathf.Min(missingCustomerCount, maxSpawnPerTick);
+
+            for (int i = 0; i < spawnCount; i++)
+            {
+                SpawnCustomer();
+            }
+
             return;
         }
 

@@ -10,8 +10,10 @@ public class CustomerAI : MonoBehaviour, IInteractable
     [SerializeField, Range(0f, 1f)] private float cheatChance = 0.25f; // npc cheating probability
     [SerializeField] private float minPlayBeforeCheat = 5f; // after 5sc that player cheats
     [SerializeField] private float minPlayAfterCheat = 15f; // last for 15 seconds
-    [SerializeField] private float minActivityDuration = 20f;
-    [SerializeField] private float maxActivityDuration = 45f;
+    [SerializeField] private float minActivityDuration = 35f;
+    [SerializeField] private float maxActivityDuration = 90f;
+    [SerializeField] private int minActivitiesBeforeLeaving = 2;
+    [SerializeField] private int maxActivitiesBeforeLeaving = 5;
     [SerializeField, Range(0f, 1f)] private float falseSuspicionChance = 0.3f;
     // sorgu sonucu UI İbo
     [Header("Interrogation Rewards")]
@@ -47,6 +49,8 @@ public class CustomerAI : MonoBehaviour, IInteractable
     private float cheatTimer;
     private float activityTimer;
     private bool willLookSuspicious;
+    private int activitiesCompleted;
+    private int activitiesBeforeLeaving;
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>(); // navmesh is a must for npc to make it walk
@@ -62,7 +66,11 @@ public class CustomerAI : MonoBehaviour, IInteractable
 
         IsCheater = Random.value < effectiveCheatChance;
         willLookSuspicious = IsCheater || Random.value < effectiveFalseSuspicion;
+        Debug.Log($"{name} spawned. Cheater: {IsCheater}, WillLookSuspicious: {willLookSuspicious}, CheatChance: {effectiveCheatChance}, FalseSuspicionChance: {effectiveFalseSuspicion}");
         CurrentState = CustomerState.Idle; // start state of npc (will change due its behaviour)
+
+        activitiesBeforeLeaving = Random.Range(minActivitiesBeforeLeaving, maxActivitiesBeforeLeaving + 1);
+        activitiesCompleted = 0;
 
         if (!TryPlaceOnNavMesh())
         {
@@ -99,8 +107,8 @@ public class CustomerAI : MonoBehaviour, IInteractable
             UpdateLeaving();
             break;
 
-            case CustomerState.PlayingBlackjack: // timer starts when NPC playing
-            UpdatePlayingBlackjack();
+            case CustomerState.PlayingActivity: // timer starts when NPC playing
+            UpdatePlayingActivity();
             break;
         }
     }
@@ -272,10 +280,11 @@ public class CustomerAI : MonoBehaviour, IInteractable
     {
         if (HasReachedDestination())
         {
-            CurrentState = CustomerState.PlayingBlackjack; // if yes npc stops and stars playing bj
+            CurrentState = CustomerState.PlayingActivity; // if yes npc stops and stars playing 
             playTimer = 0f; 
             cheatTimer = Random.Range(minPlayBeforeCheat, minPlayAfterCheat);
             activityTimer = Random.Range(minActivityDuration, maxActivityDuration);
+            Debug.Log($"{name} started activity. WillLookSuspicious: {willLookSuspicious}, CheatTimer: {cheatTimer}, ActivityTimer: {activityTimer}");
             agent.ResetPath();
         }
     }
@@ -396,7 +405,7 @@ public class CustomerAI : MonoBehaviour, IInteractable
           return false;
       }
 
-      private void UpdatePlayingBlackjack() 
+      private void UpdatePlayingActivity() 
       {
         playTimer += Time.deltaTime;
         if (willLookSuspicious && playTimer >= cheatTimer)
@@ -407,12 +416,20 @@ public class CustomerAI : MonoBehaviour, IInteractable
 
         if (playTimer >= activityTimer)
         {
-            LeaveCasino();
+            activitiesCompleted++;
+            if (activitiesCompleted >= activitiesBeforeLeaving)
+            {
+                LeaveCasino();
+                return;
+            }
+            ChooseActivity();
+            GoToSelectedActivity();
         }
       }
 
       private void BecomeSuspicious()
       {
+        Debug.Log($"{name} became suspicious. Cheater: {IsCheater}");
         CurrentState = CustomerState.Suspicious;
         agent.ResetPath();
 

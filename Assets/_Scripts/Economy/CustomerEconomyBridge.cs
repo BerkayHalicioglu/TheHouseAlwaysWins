@@ -23,7 +23,7 @@ public class CustomerEconomyBridge : MonoBehaviour
         CustomerState currentState = customerAI.CurrentState;
 
         if (!gameResolved &&
-            previousState == CustomerState.PlayingBlackjack &&
+            previousState == CustomerState.PlayingActivity &&
             (currentState == CustomerState.Leaving || currentState == CustomerState.Gone))
         {
             ResolveNpcEconomy();
