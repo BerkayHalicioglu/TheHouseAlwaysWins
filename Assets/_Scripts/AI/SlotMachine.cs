@@ -54,37 +54,25 @@ public class SlotMachine : MonoBehaviour
             runtimeUsePoint = pointObject.transform;
         }
 
-        Vector3 fallbackPosition = usePoint != null ? usePoint.position : transform.position;
-        runtimeUsePoint.position = FindWalkableUsePosition(fallbackPosition);
-        runtimeUsePoint.rotation = transform.rotation;
+        Transform targetPoint = usePoint != null ? usePoint : transform;
+        runtimeUsePoint.position = FindWalkableUsePosition(targetPoint.position);
+        runtimeUsePoint.rotation = targetPoint.rotation;
         return runtimeUsePoint;
     }
 
-    private Vector3 FindWalkableUsePosition(Vector3 fallbackPosition)
+    private Vector3 FindWalkableUsePosition(Vector3 targetPosition)
     {
-        Vector3[] directions =
+        if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, navMeshSearchDistance, NavMesh.AllAreas))
         {
-            transform.forward,
-            -transform.forward,
-            transform.right,
-            -transform.right
-        };
-
-        for (int i = 0; i < directions.Length; i++)
-        {
-            Vector3 candidatePosition = transform.position + directions[i] * standDistance;
-
-            if (NavMesh.SamplePosition(candidatePosition, out NavMeshHit hit, navMeshSearchDistance, NavMesh.AllAreas))
-            {
-                return hit.position;
-            }
+            return hit.position;
         }
 
+        Vector3 fallbackPosition = transform.position + transform.forward * standDistance;
         if (NavMesh.SamplePosition(fallbackPosition, out NavMeshHit fallbackHit, navMeshSearchDistance, NavMesh.AllAreas))
         {
             return fallbackHit.position;
         }
 
-        return fallbackPosition;
+        return targetPosition; 
     }
 }
