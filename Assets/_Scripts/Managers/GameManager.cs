@@ -82,7 +82,21 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        SaveManager.DeleteSave();
         CurrentDay = 1;
+        IsInInterrogation = false;
+        EconomyManager.Instance.Initialize(EconomyManager.Instance.StartingBankroll);
+        StartDay();
+        SceneManager.LoadScene("CasinoFloor");
+    }
+
+    public void LoadGame()
+    {
+        SaveData data = SaveManager.Load();
+        if (data == null) { StartGame(); return; }
+
+        CurrentDay = data.currentDay;
+        EconomyManager.Instance.Initialize(data.currentBankroll);
         StartDay();
         SceneManager.LoadScene("CasinoFloor");
     }
@@ -106,6 +120,11 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentDay++;
+        SaveManager.Save(new SaveData
+        {
+            currentDay      = CurrentDay,
+            currentBankroll = EconomyManager.Instance != null ? EconomyManager.Instance.CurrentBankroll : 0f
+        });
         ChangeState(GameState.DayEndReport);
         OnDayEnded?.Invoke();
     }
@@ -123,6 +142,11 @@ public class GameManager : MonoBehaviour
         {
             dayEndPending = false;
             CurrentDay++;
+            SaveManager.Save(new SaveData
+            {
+                currentDay      = CurrentDay,
+                currentBankroll = EconomyManager.Instance != null ? EconomyManager.Instance.CurrentBankroll : 0f
+            });
             ChangeState(GameState.DayEndReport);
             OnDayEnded?.Invoke();
             return;
@@ -131,6 +155,7 @@ public class GameManager : MonoBehaviour
 
     public void TriggerGameOver()
     {
+        SaveManager.DeleteSave();
         ChangeState(GameState.GameOver);
         OnGameOver?.Invoke();
     }

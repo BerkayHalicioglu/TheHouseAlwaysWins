@@ -6,6 +6,7 @@ public class MainMenuView : MonoBehaviour
 {
     [Header("Buttons")]
     [SerializeField] private Button startButton;
+    [SerializeField] private Button continueButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button creditsButton;
     [SerializeField] private Button quitButton;
@@ -18,6 +19,12 @@ public class MainMenuView : MonoBehaviour
     {
         if (startButton != null)
             startButton.onClick.AddListener(OnStartClicked);
+
+        if (continueButton != null)
+        {
+            continueButton.onClick.AddListener(OnContinueClicked);
+            continueButton.gameObject.SetActive(SaveManager.HasSave());
+        }
 
         if (settingsButton != null)
             settingsButton.onClick.AddListener(OnSettingsClicked);
@@ -38,6 +45,11 @@ public class MainMenuView : MonoBehaviour
             GameManager.Instance.StartGame();
         else
             SceneManager.LoadScene("CasinoFloor");
+    }
+
+    private void OnContinueClicked()
+    {
+        GameManager.Instance.LoadGame();
     }
 
     private void OnSettingsClicked()

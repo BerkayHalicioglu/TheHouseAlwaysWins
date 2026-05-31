@@ -25,11 +25,19 @@ public class DifficultyManager : MonoBehaviour
     [SerializeField] private float expenseMultiplierDay1 = 1f;
     [SerializeField] private float expenseMultiplierDayCap = 2f;
 
+    [Header("QTE Settings")]
+    [SerializeField] private int qteSequenceLengthDay1 = 4;
+    [SerializeField] private int qteSequenceLengthDayCap = 8;
+    [SerializeField] private float qteTimePerKeyDay1 = 3f;
+    [SerializeField] private float qteTimePerKeyDayCap = 1.8f;
+
     public float CheatChance { get; private set; }
     public float FalseSuspicionChance { get; private set; }
     public float SpawnInterval { get; private set; }
     public int TargetCustomerCount { get; private set; }
     public float ExpenseMultiplier { get; private set; }
+    public int QTESequenceLength { get; private set; }
+    public float QTETimePerKey { get; private set; }
 
     public static event System.Action OnDifficultyUpdated;
 
@@ -66,6 +74,8 @@ public class DifficultyManager : MonoBehaviour
         SpawnInterval        = Mathf.Lerp(spawnIntervalDay1,        spawnIntervalDayCap,        t);
         TargetCustomerCount  = Mathf.RoundToInt(Mathf.Lerp(customerCountDay1, customerCountDayCap, t));
         ExpenseMultiplier    = Mathf.Lerp(expenseMultiplierDay1,    expenseMultiplierDayCap,    t);
+        QTESequenceLength    = Mathf.RoundToInt(Mathf.Lerp(qteSequenceLengthDay1, qteSequenceLengthDayCap, t));
+        QTETimePerKey        = Mathf.Lerp(qteTimePerKeyDay1,        qteTimePerKeyDayCap,        t);
 
         OnDifficultyUpdated?.Invoke();
 

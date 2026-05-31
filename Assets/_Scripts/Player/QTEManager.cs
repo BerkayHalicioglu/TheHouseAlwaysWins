@@ -3,19 +3,31 @@ using UnityEngine.InputSystem;
 
 public class QTEManager : MonoBehaviour
 {
-    [Header("QTE Settings")]
-    [SerializeField] private float qteTimeLimit = 3f;
+    [Header("QTE Fallback Settings")]
+    [SerializeField] private float fallbackTimePerKey = 3f;
     [SerializeField] private PlayerController playerController;
 
-    private Key expectedKey;
-    private bool qteActive;
+    private static readonly Key[] KeyPool =
+    {
+        // Üst sıra
+        Key.Q, Key.W, Key.E, Key.R, Key.T, Key.Y, Key.U, Key.O, Key.P,
+        // Orta sıra
+        Key.A, Key.S, Key.D, Key.F, Key.G, Key.H, Key.J, Key.K, Key.L,
+        // Alt sıra
+        Key.Z, Key.X, Key.C, Key.V, Key.B, Key.N, Key.M,
+    };
+
+    private Key[] sequence;
+    private int   currentStep;
+    private bool  qteActive;
     private float timer;
     private CustomerAI currentTarget;
 
-    public static event System.Action<UnityEngine.InputSystem.Key, float> OnQTEStarted;
-    public static event System.Action OnQTESuccess;
-    public static event System.Action OnQTEFailed;
-    public static event System.Action<CustomerAI> OnInterrogationQTESuccess;
+    public static event System.Action<Key[], float> OnQTEStarted;
+    public static event System.Action<int>          OnQTEStepAdvanced;
+    public static event System.Action               OnQTESuccess;
+    public static event System.Action               OnQTEFailed;
+    public static event System.Action<CustomerAI>   OnInterrogationQTESuccess;
 
     private void OnEnable()
     {
@@ -35,56 +47,51 @@ public class QTEManager : MonoBehaviour
 
     private void StartQTE()
     {
-        if (playerController == null)
-            Debug.LogWarning("[QTE] PlayerController is not assigned.");
+        int   length     = DifficultyManager.Instance != null ? DifficultyManager.Instance.QTESequenceLength : 1;
+        float timePerKey = DifficultyManager.Instance != null ? DifficultyManager.Instance.QTETimePerKey      : fallbackTimePerKey;
 
-        expectedKey = GetRandomKey();
-        timer = qteTimeLimit;
-        qteActive = true;
+        sequence    = BuildSequence(length);
+        currentStep = 0;
+        timer       = timePerKey * length;
+        qteActive   = true;
 
         SetPlayerMovement(false);
-        OnQTEStarted?.Invoke(expectedKey, qteTimeLimit);
+        OnQTEStarted?.Invoke(sequence, timer);
     }
 
     private void Update()
     {
-        if (!qteActive)
-            return;
+        if (!qteActive) return;
 
         timer -= Time.deltaTime;
-
-        if (timer <= 0f)
-        {
-            FailQTE("Time expired");
-            return;
-        }
+        if (timer <= 0f) { FailQTE("Time expired"); return; }
 
         CheckInput();
     }
 
     private void CheckInput()
     {
-        if (Keyboard.current == null)
-            return;
+        if (Keyboard.current == null) return;
 
-        if (Keyboard.current.iKey.wasPressedThisFrame)
-            EvaluateInput(Key.I);
-
-        if (Keyboard.current.jKey.wasPressedThisFrame)
-            EvaluateInput(Key.J);
-
-        if (Keyboard.current.kKey.wasPressedThisFrame)
-            EvaluateInput(Key.K);
-
-        if (Keyboard.current.lKey.wasPressedThisFrame)
-            EvaluateInput(Key.L);
+        foreach (Key key in KeyPool)
+        {
+            if (Keyboard.current[key].wasPressedThisFrame)
+            {
+                EvaluateInput(key);
+                return;
+            }
+        }
     }
 
-    private void EvaluateInput(Key pressedKey)
+    private void EvaluateInput(Key pressed)
     {
-        if (pressedKey == expectedKey)
+        if (pressed == sequence[currentStep])
         {
-            SuccessQTE();
+            currentStep++;
+            if (currentStep >= sequence.Length)
+                SuccessQTE();
+            else
+                OnQTEStepAdvanced?.Invoke(currentStep);
         }
         else
         {
@@ -118,16 +125,11 @@ public class QTEManager : MonoBehaviour
             Debug.LogWarning("[QTE] PlayerController reference is missing.");
     }
 
-    private Key GetRandomKey()
+    private static Key[] BuildSequence(int length)
     {
-        int randomIndex = Random.Range(0, 4);
-
-        switch (randomIndex)
-        {
-            case 0: return Key.I;
-            case 1: return Key.J;
-            case 2: return Key.K;
-            default: return Key.L;
-        }
+        Key[] seq = new Key[length];
+        for (int i = 0; i < length; i++)
+            seq[i] = KeyPool[Random.Range(0, KeyPool.Length)];
+        return seq;
     }
 }

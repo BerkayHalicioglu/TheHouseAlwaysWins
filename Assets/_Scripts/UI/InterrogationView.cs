@@ -16,7 +16,7 @@ public class InterrogationView : MonoBehaviour
     {
         if (interrogationManager == null)
             interrogationManager = GetComponentInParent<InterrogationManager>(true)
-                                ?? FindObjectOfType<InterrogationManager>(true);
+                                ?? Object.FindFirstObjectByType<InterrogationManager>(FindObjectsInactive.Include);
 
         guiltyButton?.onClick.AddListener(OnGuiltyPressed);
         innocentButton?.onClick.AddListener(OnInnocentPressed);
