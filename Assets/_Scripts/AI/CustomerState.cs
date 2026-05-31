@@ -4,7 +4,7 @@ public enum CustomerState
 {
     Idle,
     WalkingToTable,
-    PlayingBlackjack,
+    PlayingActivity, // changed state here (PlayingBlack to PlayingActivity)
     Cheating,
     Suspicious,
     Interrogating,
