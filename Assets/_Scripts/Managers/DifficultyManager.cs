@@ -8,17 +8,17 @@ public class DifficultyManager : MonoBehaviour
     [SerializeField] private int dayCap = 10;
 
     [Header("Cheat Chance")]
-    [SerializeField] private float cheatChanceDay1 = 0.15f;
+    [SerializeField] private float cheatChanceDay1 = 0.25f;
     [SerializeField] private float cheatChanceDayCap = 0.45f;
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnIntervalDay1 = 3f;
     [SerializeField] private float spawnIntervalDayCap = 1.5f;
-    [SerializeField] private int customerCountDay1 = 15;
-    [SerializeField] private int customerCountDayCap = 25;
+    [SerializeField] private int customerCountDay1 = 25;
+    [SerializeField] private int customerCountDayCap = 35;
 
     [Header("False Suspicion Chance")]
-    [SerializeField] private float falseSuspicionChanceDay1 = 0.05f;
+    [SerializeField] private float falseSuspicionChanceDay1 = 0.1f;
     [SerializeField] private float falseSuspicionChanceDayCap = 0.25f;
 
     [Header("Daily Expense Multiplier")]
@@ -33,10 +33,11 @@ public class DifficultyManager : MonoBehaviour
 
     public static event System.Action OnDifficultyUpdated;
 
-    private void Awake()
+    private void Awake() // burayı fixledim artık hileciler görünecek 
     {
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
+        UpdateDifficulty();
         DontDestroyOnLoad(gameObject);
     }
 
