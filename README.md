@@ -6,11 +6,11 @@
 Bu proje Agile/Kanban metodolojileri ve tam Git/GitHub versiyon kontrol mimarisi kullanılarak geliştirilmiştir.
 
 * **Berkay Halıcıoğlu** - Sistem Mimarı / Proje Lideri (QTE, Sorgu Sistemleri, Git Entegrasyonu)
-* **Meltem** - 3D Artist (Çevre, Karakter Tasarımı, PBR Materyaller, Animasyonlar)
-* **Nida** - Geliştirici (Ekonomi Sistemleri, Risk/Ödül Matematiği, Finans Altyapısı)
-* **Yeşim** - Geliştirici (Çekirdek Oyun Sistemleri, Kod Havuzu Yönetimi, Testler)
-* **Kerem** - Geliştirici (Müşteri ve Güvenlik Yapay Zekası / NavMesh AI)
-* **İbrahim** - Geliştirici (Kullanıcı Arayüzü / UI, HUD, Geri Bildirim Sistemleri)
+* **Meltem Kuru** - 3D Artist (Çevre, Karakter Tasarımı, PBR Materyaller, Animasyonlar)
+* **Nida Zorlu** - Geliştirici (Ekonomi Sistemleri, Risk/Ödül Matematiği, Finans Altyapısı)
+* **Zeynep Aslan** - Geliştirici (Çekirdek Oyun Sistemleri, Kod Havuzu Yönetimi, Testler)
+* **Berat Kerem Öztopuz** - Geliştirici (Müşteri ve Güvenlik Yapay Zekası / NavMesh AI)
+* **İbrahim Arıkboğa** - Geliştirici (Kullanıcı Arayüzü / UI, HUD, Geri Bildirim Sistemleri)
 
 ## ⚙️ Kurulum Talimatları (Setup Instructions)
 Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin:
