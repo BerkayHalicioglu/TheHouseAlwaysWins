@@ -2,7 +2,7 @@
 
 **The House Always Wins**, Unity 3D motoru ile geliştirilmiş risk ve ödül tabanlı, interaktif bir casino yönetimi ve simülasyon oyunudur. Oyuncular casino içindeki güvenliği sağlar, yapay zeka yönlendirmeli müşterileri takip eder ve şüpheli durumlarda "Sorgu Odası" (Interrogation) mekaniği ile kritik kararlar alarak casinonun ekonomisini yönetirler.
 
-## 👥 Geliştirici Ekip (Team Name)
+## 👥 Geliştirici Ekip (GLITCH)
 Bu proje Agile/Kanban metodolojileri ve tam Git/GitHub versiyon kontrol mimarisi kullanılarak geliştirilmiştir.
 
 * **Berkay Halıcıoğlu** - Sistem Mimarı / Proje Lideri (QTE, Sorgu Sistemleri, Git Entegrasyonu)
